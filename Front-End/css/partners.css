@@ -1,0 +1,22 @@
+/* Estilos para o carrossel de parceiros */
+.swiper-partners {
+    padding: 20px 0;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.swiper-slide img {
+    height: 140px; /* Aumentando o tamanho das logos */
+    width: auto;
+    object-fit: contain;
+}
+
+.swiper-slide:hover {
+    opacity: 1;
+} 

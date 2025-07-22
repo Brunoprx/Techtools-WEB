@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Entre em contato com nossa equipe de suporte técnico">
+    <meta name="keywords" content="Suporte Técnico, Help Desk, Chamados, TI">
+    <meta name="author" content="Techtools">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="css/contato.css" />
+    <title>Techtools | Contato</title>
+</head>
+<body>
+    <header class="bg-[#27a3df] shadow-md fixed w-full z-50">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo2.png" alt="Techtools Logo" class="h-12 w-12 bg-white p-1 rounded-lg" />
+                <h1>Techtools</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="index.html#servicos">Serviços</a></li>
+                    <li><a href="index.html#planos">Planos</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="login.html" class="btn-login">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-contato">
+            <div class="container">
+                <h1>Entre em Contato</h1>
+                <h3>Solicite uma proposta para sua empresa</h3>
+            </div>
+        </section>
+
+        <section class="contato-grid">
+            <div class="container">
+                <div class="grid-layout">
+                    <!-- Formulário -->
+                    <div class="form-section">
+                        <h2>Solicite uma Proposta</h2>
+                        <form>
+                            <div class="form-row">
+                                <div class="input-field">
+                                    <label for="empresa">Nome da Empresa</label>
+                                    <input type="text" id="empresa" name="empresa" placeholder="Nome da sua empresa" required />
+                                </div>
+                                <div class="input-field">
+                                    <label for="cnpj">CNPJ</label>
+                                    <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00" required />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="input-field">
+                                    <label for="contato">Nome do Contato</label>
+                                    <input type="text" id="contato" name="contato" placeholder="Nome do responsável" required />
+                                </div>
+                                <div class="input-field">
+                                    <label for="cargo">Cargo</label>
+                                    <input type="text" id="cargo" name="cargo" placeholder="Seu cargo na empresa" required />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="input-field">
+                                    <label for="email">E-mail Corporativo</label>
+                                    <input type="email" id="email" name="email" placeholder="seu@email.com.br" required />
+                                </div>
+                                <div class="input-field">
+                                    <label for="telefone">Telefone</label>
+                                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 0000-0000" required />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="input-field">
+                                    <label for="servico">Serviço de Interesse</label>
+                                    <select id="servico" name="servico" required>
+                                        <option value="">Selecione um serviço</option>
+                                        <option value="suporte">Suporte Técnico</option>
+                                        <option value="infra">Infraestrutura</option>
+                                        <option value="seguranca">Segurança Digital</option>
+                                        <option value="consultoria">Consultoria em TI</option>
+                                    </select>
+                                </div>
+                                <div class="input-field">
+                                    <label for="funcionarios">Número de Funcionários</label>
+                                    <select id="funcionarios" name="funcionarios" required>
+                                        <option value="">Selecione uma opção</option>
+                                        <option value="1-10">1-10 funcionários</option>
+                                        <option value="11-50">11-50 funcionários</option>
+                                        <option value="51-200">51-200 funcionários</option>
+                                        <option value="201+">201+ funcionários</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row full">
+                                <div class="input-field">
+                                    <label for="mensagem">Mensagem</label>
+                                    <textarea id="mensagem" name="mensagem" rows="4" placeholder="Descreva suas necessidades e como podemos ajudar"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-button">
+                                <button type="submit">Solicitar Proposta</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Informações de Contato -->
+                    <div class="info-section">
+                        <div class="info-card">
+                            <i class="fas fa-phone"></i>
+                            <h3>Telefone</h3>
+                            <p>(19) 3000-0000</p>
+                            <p>Segunda a Sexta, 8h às 18h</p>
+                        </div>
+
+                        <div class="info-card">
+                            <i class="fas fa-envelope"></i>
+                            <h3>E-mail</h3>
+                            <p>comercial@techsupport.com</p>
+                            <p>Resposta em até 24h úteis</p>
+                        </div>
+
+                        <div class="info-card map-card">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>Endereço</h3>
+                            <p>Campinas - SP</p>
+                            <p>Atendemos todo o Brasil</p>
+                            <div id="map"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="Techtools Logo" />
+                    <p>Soluções em TI para sua empresa</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="index.html#servicos">Serviços</a></li>
+                        <li><a href="index.html#planos">Planos</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contato">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> comercial@techtools.com</li>
+                        <li><i class="fas fa-phone"></i> (19) 3000-0000</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Campinas - SP</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Techtools. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Inicializa o mapa
+        var map = L.map('map').setView([-22.8370, -47.0400], 15);
+
+        // Adiciona o tile layer do OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Adiciona um marcador
+        var marker = L.marker([-22.9056, -47.0608]).addTo(map);
+        marker.bindPopup("<b>Techtools</b><br>Campinas - SP").openPopup();
+    </script>
+</body>
+</html>

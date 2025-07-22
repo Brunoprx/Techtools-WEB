@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Techtools - Histórico de Chamados</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    /* Cores da Marca */
+    .bg-primary { background-color: #27a3df; }
+    .text-primary { color: #27a3df; }
+    .border-primary { border-color: #27a3df; }
+    .hover-bg-primary:hover { background-color: #1d8ebf; }
+    
+    /* Estilo da Aba de Navegação Ativa */
+    .tab-active {
+      color: #27a3df;
+      font-weight: 600;
+      background-color: #eff6ff;
+      border-radius: 6px;
+    }
+    .period-tab-active {
+        color: #27a3df;
+        border-bottom: 2px solid #27a3df;
+        font-weight: 600;
+    }
+
+    /* Badge de Status (Consistente) */
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .status-finalizado { background-color: #dcfce7; color: #166534; }
+    .status-cancelado { background-color: #fee2e2; color: #991b1b; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  
+  <header class="bg-white shadow-sm w-full z-50">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="logo flex items-center space-x-3">
+          <img src="images/logo2.png" alt="Techtools Logo" class="h-10 w-10 bg-white p-1 rounded-lg">
+          <h1 class="text-2xl font-bold text-gray-800">Techtools</h1>
+        </div>
+        <div class="flex items-center space-x-6">
+          <button aria-label="Notificações" class="text-gray-500 hover:text-primary relative">
+            <i class="fas fa-bell text-xl"></i>
+          </button>
+          <div class="flex items-center space-x-3">
+            <img alt="Avatar do colaborador" class="w-9 h-9 rounded-full" src="https://storage.googleapis.com/a1aa/image/e4a14e45-6fc6-4f88-0967-8b29ec919448.jpg"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="bg-white border-t border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center space-x-2 sm:space-x-4 py-2">
+        <a href="colaborador.html" class="px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-primary rounded-md transition-colors">Novo Chamado</a>
+        <a href="chamados.html" class="px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-primary rounded-md transition-colors">Meus Chamados</a>
+        <a href="historico.html" class="px-3 py-2 text-sm tab-active">Histórico</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="py-8">
+    <div class="container mx-auto px-4">
+      <button onclick="window.history.back()" class="mb-6 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg flex items-center"><i class="fas fa-arrow-left mr-2"></i>Voltar</button>
+      <div class="max-w-7xl mx-auto space-y-8">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+          <h1 class="text-3xl font-bold text-gray-800">Histórico de Chamados</h1>
+          <div class="flex space-x-3">
+            <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center">
+              <i class="fas fa-download mr-2"></i> Exportar
+            </button>
+            <a href="colaborador.html" class="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover-bg-primary shadow-sm flex items-center">
+              <i class="fas fa-plus mr-2"></i> Novo Chamado
+            </a>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-sm p-5">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="font-bold text-gray-800">Filtros Avançados</h2>
+            <button class="text-sm text-primary hover:underline">Limpar filtros</button>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+              <input type="text" placeholder="Buscar por título ou ID..." class="lg:col-span-2 w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <input type="date" class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <input type="date" class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-4 py-2 rounded-lg text-sm">Filtrar</button>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div class="border-b border-gray-200">
+            <div class="flex overflow-x-auto">
+              <button class="px-5 py-3 text-sm font-medium period-tab-active">Último Trimestre</button>
+              <button class="px-5 py-3 text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Último Semestre</button>
+              <button class="px-5 py-3 text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50">Último Ano</button>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Título</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Conclusão</th>
+                  <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-historico-body" class="bg-white divide-y divide-gray-200">
+                <!-- Chamados serão carregados aqui pelo script -->
+              </tbody>
+            </table>
+          </div>
+          </div>
+        
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h2 class="text-xl font-bold text-gray-800 mb-5">Análise de Desempenho</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 class="font-medium text-gray-700 mb-3">Chamados por Tipo</h3>
+              <div class="space-y-3" id="chamados-por-tipo"></div>
+            </div>
+            <div>
+              <h3 class="font-medium text-gray-700 mb-3">Padrões de Problemas (Últimos 30 dias)</h3>
+              <div class="space-y-3" id="padroes-problemas"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 text-white mt-12">
+    <div class="container mx-auto px-4 py-6">
+      <div class="text-center text-sm text-gray-400">
+        <p>&copy; 2025 Techtools. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+// Função para decodificar JWT
+function parseJwt (token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return {};
+  }
+}
+// Função para preencher gráficos e percentuais de desempenho dinamicamente
+async function preencherGraficosHistorico() {
+  const token = localStorage.getItem('jwt_token');
+  let perfil = null, colaboradorId = null, tecnicoId = null;
+  if (token) {
+    const payload = parseJwt(token);
+    perfil = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    colaboradorId = payload.sub ? parseInt(payload.sub) : null;
+    tecnicoId = payload.sub ? parseInt(payload.sub) : null;
+  }
+  let url = 'https://localhost:5001/api/chamados/analise-desempenho';
+  if (perfil === 'Colaborador') {
+    url += `?colaboradorId=${colaboradorId}`;
+  } else if (perfil === 'Técnico') {
+    url += `?tecnicoId=${tecnicoId}`;
+  }
+  const resp = await fetch(url);
+  const dados = await resp.json();
+  // Chamados por Tipo
+  const tiposContainer = document.getElementById('chamados-por-tipo');
+  if (tiposContainer) {
+    tiposContainer.innerHTML = '';
+    if (!dados.chamadosPorTipo || dados.chamadosPorTipo.length === 0) {
+      tiposContainer.innerHTML = '<p class="text-gray-500">Nenhum chamado encontrado.</p>';
+    } else {
+      dados.chamadosPorTipo.forEach(tp => {
+        tiposContainer.innerHTML += `
+          <div class="flex items-center justify-between"><span class="text-sm">${tp.tipo}</span><span class="text-sm font-bold">${tp.percentual}%</span></div>
+          <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: ${tp.percentual}%"></div></div>
+        `;
+      });
+    }
+  }
+  // Padrões de Problemas
+  const padroesContainer = document.getElementById('padroes-problemas');
+  if (padroesContainer) {
+    padroesContainer.innerHTML = '';
+    if (!dados.padroesProblemas || dados.padroesProblemas.length === 0) {
+      padroesContainer.innerHTML = '<p class="text-gray-500">Nenhum dado para análise de padrões.</p>';
+    } else {
+      dados.padroesProblemas.forEach(p => {
+        padroesContainer.innerHTML += `
+          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <p class="text-sm font-medium">${p.titulo}</p>
+            <span class="text-sm font-bold ${p.variacao > 0 ? 'text-red-500' : 'text-green-600'} flex items-center">
+              <i class="fas ${p.variacao > 0 ? 'fa-arrow-up' : 'fa-arrow-down'} mr-1"></i> ${Math.abs(p.variacao)}%
+            </span>
+          </div>
+        `;
+      });
+    }
+  }
+}
+
+async function preencherTabelaHistorico() {
+  const token = localStorage.getItem('jwt_token');
+  let perfil = null, colaboradorId = null, tecnicoId = null;
+  if (token) {
+    const payload = parseJwt(token);
+    perfil = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    colaboradorId = payload.sub ? parseInt(payload.sub) : null;
+    tecnicoId = payload.sub ? parseInt(payload.sub) : null;
+  }
+  // ---
+  // Lógica robusta para detecção de perfil:
+  // Normalizamos o valor do perfil extraído do token JWT para minúsculo e sem acento,
+  // assim aceitamos qualquer variação de "Colaborador" (ex: "Colaborador", "colaborador", "COLABORADOR", etc)
+  // e também "rh" como perfil de colaborador. Isso garante que o endpoint correto será chamado
+  // mesmo que o backend envie valores diferentes ou haja mudanças futuras nos perfis.
+  // ---
+  const perfilNormalizado = perfil ? perfil.normalize('NFD').replace(/[^a-zA-Z]/g, '').toLowerCase() : '';
+  console.log('Perfil detectado:', perfil, '| Normalizado:', perfilNormalizado, '| colaboradorId:', colaboradorId, '| tecnicoId:', tecnicoId);
+
+  let url = 'https://localhost:5001/api/chamados/colaborador/';
+  if (perfilNormalizado.includes('colaborador') || perfilNormalizado === 'rh') {
+    url += colaboradorId;
+  } else if (perfilNormalizado.includes('tecnico')) {
+    url += tecnicoId;
+  } else {
+    url = 'https://localhost:5001/api/chamados/fila';
+  }
+  const resp = await fetch(url);
+  const chamados = await resp.json();
+  const tabelaBody = document.getElementById('tabela-historico-body');
+  if (tabelaBody) {
+    tabelaBody.innerHTML = '';
+    if (!chamados || chamados.length === 0) {
+      tabelaBody.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500 py-8">Nenhum chamado encontrado.</td></tr>';
+    } else {
+      chamados.forEach(c => {
+        tabelaBody.innerHTML += `
+          <tr>
+            <td>#${c.id}</td>
+            <td>${c.titulo}</td>
+            <td><span class="badge badge-status badge-${(c.status || '').toLowerCase()}">${c.status}</span></td>
+            <td>${c.dataFechamento ? new Date(c.dataFechamento).toLocaleDateString() : '-'}</td>
+            <td><a href="detalhes_chamado.html?id=${c.id}" class="text-primary hover:underline">Ver</a></td>
+          </tr>
+        `;
+      });
+    }
+  }
+}
+window.addEventListener('DOMContentLoaded', preencherTabelaHistorico);
+</script>
+</body>
+</html>

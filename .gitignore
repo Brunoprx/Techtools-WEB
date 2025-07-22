@@ -1,0 +1,20 @@
+# Arquivos de Dependência e Build
+**/[Bb]in/
+**/[Oo]bj/
+
+# Arquivos de Configuração do Usuário
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Arquivos do Visual Studio
+.vs/
+*.csproj.user
+*.csproj.DotNetCore.user
+
+# Arquivos do Rider
+.idea/
+
+# Outros
+*.DS_Store

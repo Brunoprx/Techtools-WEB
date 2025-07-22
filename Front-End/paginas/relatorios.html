@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Techtools - Relatórios</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    .bg-primary {
+      background-color: #27a3df;
+    }
+    .bg-secondary {
+      background-color: #009929;
+    }
+    .text-primary {
+      color: #27a3df;
+    }
+    .text-secondary {
+      color: #009929;
+    }
+    .border-primary {
+      border-color: #27a3df;
+    }
+    .hover-primary:hover {
+      background-color: #1d8ebf;
+    }
+    .hover-secondary:hover {
+      background-color: #009929;
+    }
+    .tab-active {
+      color: #27a3df;
+      border-bottom: 2px solid #27a3df;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <header class="bg-primary shadow-md w-full z-50">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex justify-between items-center">
+        <div class="logo flex items-center space-x-3">
+          <img src="images/logo2.png" alt="Techtools Logo" class="h-10 w-10 bg-white p-1 rounded-lg">
+          <h1 class="text-2xl font-bold text-white">
+            Techtools
+          </h1>
+        </div>
+        <div class="flex items-center space-x-6 text-gray-100">
+          <button aria-label="Notificações" class="flex items-center space-x-1 hover:text-white relative">
+            <i class="fas fa-bell"></i>
+            <span class="absolute -top-1 -right-1 bg-red-500 rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-bold">3</span>
+          </button>
+          <div class="flex items-center space-x-2">
+            <span class="text-sm font-normal">Gestor</span>
+            <img alt="Avatar do gestor" class="w-8 h-8 rounded-full" src="https://storage.googleapis.com/a1aa/image/e4a14e45-6fc6-4f88-0967-8b29ec919448.jpg"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="bg-white shadow-sm">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex items-center space-x-6 text-sm text-gray-600 select-none overflow-x-auto scrollbar-hide">
+        <a href="colaborador.html" class="whitespace-nowrap hover:text-primary transition-colors duration-300">
+          Novo Chamado
+        </a>
+        <a href="chamados.html" class="whitespace-nowrap hover:text-primary transition-colors duration-300">
+          Chamados
+        </a>
+        <a href="historico.html" class="whitespace-nowrap hover:text-primary transition-colors duration-300">
+          Histórico
+        </a>
+        <a href="Front-End/paginas/relatorios.html" class="relative font-semibold text-primary whitespace-nowrap tab-active">
+          Relatórios
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="py-8">
+    <div class="container mx-auto px-4">
+      <button onclick="window.history.back()" class="mb-6 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg flex items-center"><i class="fas fa-arrow-left mr-2"></i>Voltar</button>
+      <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-2xl font-bold text-primary">Relatórios de Atendimento Técnico</h1>
+          <div class="flex space-x-3">
+            <button class="px-4 py-2 bg-primary text-white rounded-md text-sm hover-primary transition-colors duration-300 flex items-center">
+              <i class="fas fa-file-pdf mr-2"></i> Exportar PDF
+            </button>
+            <button class="px-4 py-2 bg-secondary text-white rounded-md text-sm hover-secondary transition-colors duration-300 flex items-center">
+              <i class="fas fa-file-excel mr-2"></i> Exportar Excel
+            </button>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <h2 class="text-lg font-semibold text-gray-700 mb-4">Filtros do Relatório</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <label for="data-inicio" class="block text-sm text-gray-600 mb-1">Período</label>
+              <div class="grid grid-cols-2 gap-2">
+                <input id="data-inicio" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Data Início">
+                <input id="data-fim" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary" placeholder="Data Fim">
+              </div>
+            </div>
+            
+            <div>
+              <label for="setor" class="block text-sm text-gray-600 mb-1">Setor</label>
+              <select id="setor" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                <option value="">Todos os setores</option>
+                <option value="ti">TI</option>
+                <option value="rh">RH</option>
+                <option value="financeiro">Financeiro</option>
+                <option value="comercial">Comercial</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="tipo-problema" class="block text-sm text-gray-600 mb-1">Tipo de Problema</label>
+              <select id="tipo-problema" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                <option value="">Todos os tipos</option>
+                <option value="hardware">Hardware</option>
+                <option value="software">Software</option>
+                <option value="rede">Rede</option>
+                <option value="outros">Outros</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="tecnico" class="block text-sm text-gray-600 mb-1">Técnico</label>
+              <select id="tecnico" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                <option value="">Todos os técnicos</option>
+                <option value="1">João Silva</option>
+                <option value="2">Maria Santos</option>
+                <option value="3">Pedro Oliveira</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="prioridade" class="block text-sm text-gray-600 mb-1">Prioridade</label>
+              <select id="prioridade" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                <option value="">Todas as prioridades</option>
+                <option value="baixa">Baixa</option>
+                <option value="media">Média</option>
+                <option value="alta">Alta</option>
+                <option value="critica">Crítica</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="status" class="block text-sm text-gray-600 mb-1">Status</label>
+              <select id="status" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+                <option value="">Todos os status</option>
+                <option value="aberto">Aberto</option>
+                <option value="andamento">Em andamento</option>
+                <option value="finalizado">Finalizado</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-6 flex justify-end">
+            <button class="px-6 py-2 bg-primary text-white rounded-md text-sm hover-primary transition-colors duration-300 flex items-center">
+              <i class="fas fa-filter mr-2"></i> Gerar Relatório
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard/KPIs -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-primary">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm text-gray-500">Total de Chamados</p>
+                <p class="text-2xl font-bold card-total-chamados">-</p>
+              </div>
+              <div class="bg-blue-100 p-2 rounded-lg">
+                <i class="fas fa-ticket-alt text-primary"></i>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-yellow-500">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm text-gray-500">Tempo Médio de Resolução</p>
+                <p class="text-2xl font-bold card-tempo-medio">-</p>
+              </div>
+              <div class="bg-yellow-100 p-2 rounded-lg">
+                <i class="fas fa-clock text-yellow-500"></i>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-green-500">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm text-gray-500">SLA de Atendimento</p>
+                <p class="text-2xl font-bold card-sla">-</p>
+              </div>
+              <div class="bg-green-100 p-2 rounded-lg">
+                <i class="fas fa-chart-line text-green-500"></i>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-red-500">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm text-gray-500">Chamados Fora do Prazo</p>
+                <p class="text-2xl font-bold card-fora-prazo">-</p>
+              </div>
+              <div class="bg-red-100 p-2 rounded-lg">
+                <i class="fas fa-exclamation-circle text-red-500"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Painel de Desempenho Técnico (aparece só para técnicos) -->
+        <div id="painel-tecnico" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 hidden">
+          <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-primary">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm text-gray-500">Total de Chamados</p>
+                <p id="card-total" class="text-2xl font-bold">-</p>
+              </div>
+              <div class="bg-blue-100 p-2 rounded-lg">
+                <i class="fas fa-ticket-alt text-primary"></i>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-green-500">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm text-gray-500">Resolvidos</p>
+                <p id="card-resolvidos" class="text-2xl font-bold">-</p>
+              </div>
+              <div class="bg-green-100 p-2 rounded-lg">
+                <i class="fas fa-check-circle text-green-500"></i>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-yellow-500">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm text-gray-500">Em Andamento</p>
+                <p id="card-andamento" class="text-2xl font-bold">-</p>
+              </div>
+              <div class="bg-yellow-100 p-2 rounded-lg">
+                <i class="fas fa-spinner text-yellow-500"></i>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-red-500">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm text-gray-500">Fora do Prazo</p>
+                <p id="card-fora-prazo" class="text-2xl font-bold">-</p>
+              </div>
+              <div class="bg-red-100 p-2 rounded-lg">
+                <i class="fas fa-exclamation-circle text-red-500"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Badge de desempenho -->
+        <div id="badge-desempenho" class="mb-6 hidden">
+          <span class="inline-block bg-green-100 text-green-800 text-sm font-semibold px-4 py-2 rounded-full shadow">Parabéns! Todos os chamados resolvidos no prazo!</span>
+        </div>
+        <!-- Fim painel técnico -->
+
+        <!-- Gráficos -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Distribuição por Tipo de Problema</h3>
+            <div class="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
+              <canvas id="graficoStatusChamados" width="320" height="220"></canvas>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">&nbsp;</h3>
+            <div class="h-64 flex items-center justify-center bg-gray-50 rounded-lg relative">
+              <div id="resumo-tecnico" class="absolute inset-0 flex flex-col justify-between h-full w-full bg-white p-4 rounded-lg shadow-sm hidden z-10">
+                <div>
+                  <h4 class="text-lg font-semibold text-gray-700 mb-2">Seu desempenho em <span id="mes-atual"></span></h4>
+                  <ul class="text-sm text-gray-600 space-y-1 mb-4">
+                    <li>Resolvidos: <span id="resumo-resolvidos">-</span></li>
+                    <li>Em andamento: <span id="resumo-andamento">-</span></li>
+                    <li>Críticos em aberto: <span id="resumo-criticos">-</span></li>
+                    <li>Tempo médio: <span id="resumo-tempo-medio">-</span></li>
+                  </ul>
+                </div>
+                <div class="mt-auto">
+                  <div class="bg-blue-50 text-blue-800 text-xs rounded px-3 py-2 shadow flex items-center">
+                    <i class="fas fa-lightbulb mr-2"></i>
+                    <span id="dica-motivacional">Registrar detalhes na solução agiliza o aceite do cliente!</span>
+                  </div>
+                </div>
+              </div>
+              <canvas id="graficoTecnicosChamados" width="320" height="220"></canvas>
+            </div>
+          </div>
+          
+          <div class="bg-white p-4 rounded-lg shadow-sm lg:col-span-2">
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Evolução de Chamados</h3>
+            <div class="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
+              <canvas id="graficoLinhaChamados" width="320" height="220"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabela de Dados -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ID
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Título
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Solicitante
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Setor
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Técnico
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Prioridade
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Data Abertura
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Data Fechamento
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tempo Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200" id="tabela-chamados-body">
+                <!-- Os dados reais dos chamados devem ser renderizados aqui via JS -->
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Paginação -->
+          <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+            <div class="flex-1 flex justify-between sm:hidden">
+              <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                Anterior
+              </a>
+              <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                Próximo
+              </a>
+            </div>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+              <div>
+                <p class="text-sm text-gray-700">
+                  Mostrando <span class="font-medium">1</span> a <span class="font-medium">10</span> de <span class="font-medium">97</span> resultados
+                </p>
+              </div>
+              <div>
+                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                  <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <span class="sr-only">Anterior</span>
+                    <i class="fas fa-chevron-left"></i>
+                  </a>
+                  <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    1
+                  </a>
+                  <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-primary text-sm font-medium text-white hover:bg-primary">
+                    2
+                  </a>
+                  <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    3
+                  </a>
+                  <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                    ...
+                  </span>
+                  <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    8
+                  </a>
+                  <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <span class="sr-only">Próximo</span>
+                    <i class="fas fa-chevron-right"></i>
+                  </a>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-gray-200 mt-8">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="text-sm text-gray-500">
+          © 2024 Techtools. Todos os direitos reservados.
+        </div>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-gray-500">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-gray-500">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-gray-500">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+<script>
+// Função para buscar dados do endpoint e renderizar o gráfico de status
+async function carregarGraficoStatusChamados() {
+  try {
+    const response = await fetch('https://localhost:5001/api/chamados/relatorio-status');
+    if (!response.ok) throw new Error('Erro ao buscar dados do relatório');
+    const data = await response.json();
+    console.log('Dados recebidos do endpoint:', data); // Depuração
+    let labels = [];
+    let valores = [];
+    // Suporta ambos formatos: objeto ou lista
+    if (Array.isArray(data)) {
+      labels = data.map(item => item.status);
+      valores = data.map(item => item.quantidade);
+    } else {
+      labels = Object.keys(data);
+      valores = Object.values(data);
+    }
+    // Remove gráfico anterior se existir e for válido
+    if (window.graficoStatusChamados && typeof window.graficoStatusChamados.destroy === 'function') {
+      window.graficoStatusChamados.destroy();
+    }
+    const ctx = document.getElementById('graficoStatusChamados').getContext('2d');
+    window.graficoStatusChamados = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: valores,
+          backgroundColor: [
+            '#27a3df', '#fbbf24', '#22c55e', '#ef4444', '#6366f1', '#f472b6', '#a3e635', '#f59e42'
+          ],
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { position: 'bottom' },
+          title: { display: false }
+        }
+      }
+    });
+  } catch (e) {
+    const div = document.getElementById('graficoStatusChamados').parentElement;
+    div.innerHTML = '<p class="text-red-500">Erro ao carregar gráfico: ' + e.message + '</p>';
+  }
+}
+
+// Função para buscar dados do endpoint e renderizar o gráfico de técnicos
+async function carregarGraficoTecnicosChamados() {
+  try {
+    // Recupera o token do localStorage
+    const token = localStorage.getItem('jwt_token');
+    let perfil = null;
+    let tecnicoId = null;
+    if (token) {
+      const payload = parseJwt(token);
+      perfil = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      tecnicoId = payload.sub ? parseInt(payload.sub) : null;
+    }
+    // Monta a URL do endpoint
+    let url = 'https://localhost:5001/api/chamados/relatorio-tecnicos';
+    if (perfil === 'Técnico' && tecnicoId) {
+      url += `?tecnicoId=${tecnicoId}`;
+    }
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Erro ao buscar dados do relatório de técnicos');
+    const data = await response.json();
+    // Espera-se: [{ tecnicoId, nome, quantidade }]
+    const labels = data.map(item => item.nome);
+    const valores = data.map(item => item.quantidade);
+    // Remove gráfico anterior se existir
+    if (window.graficoTecnicosChamados && typeof window.graficoTecnicosChamados.destroy === 'function') {
+      window.graficoTecnicosChamados.destroy();
+    }
+    const ctx = document.getElementById('graficoTecnicosChamados').getContext('2d');
+    window.graficoTecnicosChamados = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Chamados',
+          data: valores,
+          backgroundColor: '#27a3df',
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false },
+          title: { display: false }
+        },
+        scales: {
+          x: { beginAtZero: true }
+        }
+      }
+    });
+  } catch (e) {
+    const div = document.getElementById('graficoTecnicosChamados').parentElement;
+    div.innerHTML = '<p class="text-red-500">Erro ao carregar gráfico: ' + e.message + '</p>';
+  }
+}
+
+// Função para exibir painel técnico ou gráfico de barras conforme perfil
+async function exibirPainelOuGraficoTecnico() {
+  const token = localStorage.getItem('jwt_token');
+  let perfil = null;
+  let tecnicoId = null;
+  if (token) {
+    const payload = parseJwt(token);
+    perfil = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    tecnicoId = payload.sub ? parseInt(payload.sub) : null;
+  }
+  const painel = document.getElementById('painel-tecnico');
+  const badge = document.getElementById('badge-desempenho');
+  const graficoTecnicos = document.getElementById('graficoTecnicosChamados');
+  const resumo = document.getElementById('resumo-tecnico');
+  if (perfil === 'Técnico' && tecnicoId) {
+    painel.classList.remove('hidden');
+    badge.classList.remove('hidden');
+    if (graficoTecnicos) graficoTecnicos.classList.add('hidden');
+    if (resumo) resumo.classList.remove('hidden');
+  } else {
+    painel.classList.add('hidden');
+    badge.classList.add('hidden');
+    if (graficoTecnicos) graficoTecnicos.classList.remove('hidden');
+    if (resumo) resumo.classList.add('hidden');
+  }
+}
+
+// Função para exibir gráfico de linha de evolução dos chamados resolvidos do técnico
+async function carregarGraficoEvolucaoTecnico() {
+  const token = localStorage.getItem('jwt_token');
+  let perfil = null;
+  let tecnicoId = null;
+  if (token) {
+    const payload = parseJwt(token);
+    perfil = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    tecnicoId = payload.sub ? parseInt(payload.sub) : null;
+  }
+  const divGrafico = document.getElementById('graficoLinhaChamados')?.parentElement;
+  if (perfil === 'Técnico' && tecnicoId) {
+    // Buscar evolução dos chamados resolvidos
+    const response = await fetch(`https://localhost:5001/api/chamados/evolucao-tecnico?tecnicoId=${tecnicoId}&periodo=mes`);
+    const data = await response.json();
+    const labels = data.map(item => item.periodo);
+    const valores = data.map(item => item.quantidade);
+    // Remove gráfico anterior se existir
+    if (window.graficoLinhaChamados && typeof window.graficoLinhaChamados.destroy === 'function') {
+      window.graficoLinhaChamados.destroy();
+    }
+    let canvas = document.getElementById('graficoLinhaChamados');
+    if (!canvas) {
+      // Cria o canvas se não existir
+      const novoCanvas = document.createElement('canvas');
+      novoCanvas.id = 'graficoLinhaChamados';
+      novoCanvas.width = 320;
+      novoCanvas.height = 220;
+      divGrafico.innerHTML = '';
+      divGrafico.appendChild(novoCanvas);
+      canvas = novoCanvas;
+    }
+    const ctx = canvas.getContext('2d');
+    window.graficoLinhaChamados = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Resolvidos',
+          data: valores,
+          borderColor: '#27a3df',
+          backgroundColor: 'rgba(39,163,223,0.1)',
+          tension: 0.3,
+          fill: true,
+          pointRadius: 4,
+          pointBackgroundColor: '#27a3df',
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+          title: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  } else {
+    // Se não for técnico, limpa o gráfico
+    if (divGrafico) divGrafico.innerHTML = '<p class="text-gray-500">Gráfico de Linha</p>';
+  }
+}
+
+// Função para exibir gráfico de linha de evolução geral dos chamados para gestores
+async function carregarGraficoEvolucaoGeral() {
+  const token = localStorage.getItem('jwt_token');
+  let perfil = null;
+  if (token) {
+    const payload = parseJwt(token);
+    perfil = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+  }
+  const divGrafico = document.getElementById('graficoLinhaChamados')?.parentElement;
+  if (perfil === 'Gestor' || perfil === 'Administrador') {
+    try {
+      const response = await fetch('https://localhost:5001/api/chamados/evolucao-geral?periodo=mes');
+      if (!response.ok) throw new Error('Erro ao buscar evolução geral');
+      const data = await response.json();
+      if (!Array.isArray(data) || data.length === 0) {
+        divGrafico.innerHTML = '<p class="text-gray-500">Sem dados para exibir.</p>';
+        return;
+      }
+      // Descobrir todos os status possíveis
+      const statusSet = new Set();
+      data.forEach(item => {
+        Object.keys(item.quantidadesPorStatus).forEach(status => statusSet.add(status));
+      });
+      const statusList = Array.from(statusSet);
+      // Montar datasets para cada status
+      const labels = data.map(item => item.periodo);
+      const datasets = statusList.map((status, idx) => {
+        const cor = [
+          '#27a3df', '#fbbf24', '#22c55e', '#ef4444', '#6366f1', '#f472b6', '#a3e635', '#f59e42'
+        ][idx % 8];
+        return {
+          label: status,
+          data: data.map(item => item.quantidadesPorStatus[status] || 0),
+          borderColor: cor,
+          backgroundColor: cor + '22', // Transparente
+          tension: 0.3,
+          fill: false,
+          pointRadius: 4,
+          pointBackgroundColor: cor,
+        };
+      });
+      // Remove gráfico anterior se existir
+      if (window.graficoLinhaChamados && typeof window.graficoLinhaChamados.destroy === 'function') {
+        window.graficoLinhaChamados.destroy();
+      }
+      let canvas = document.getElementById('graficoLinhaChamados');
+      if (!canvas) {
+        const novoCanvas = document.createElement('canvas');
+        novoCanvas.id = 'graficoLinhaChamados';
+        novoCanvas.width = 320;
+        novoCanvas.height = 220;
+        divGrafico.innerHTML = '';
+        divGrafico.appendChild(novoCanvas);
+        canvas = novoCanvas;
+      }
+      const ctx = canvas.getContext('2d');
+      window.graficoLinhaChamados = new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          plugins: {
+            legend: { display: true, position: 'bottom' },
+            title: { display: false }
+          },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    } catch (e) {
+      divGrafico.innerHTML = '<p class="text-red-500">Erro ao carregar gráfico: ' + e.message + '</p>';
+    }
+  }
+}
+
+// Função para exibir cartão de resumo e dica para técnicos
+async function exibirResumoTecnico() {
+  const token = localStorage.getItem('jwt_token');
+  let perfil = null;
+  let tecnicoId = null;
+  if (token) {
+    const payload = parseJwt(token);
+    perfil = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    tecnicoId = payload.sub ? parseInt(payload.sub) : null;
+  }
+  const resumo = document.getElementById('resumo-tecnico');
+  const mesAtual = new Date().toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
+  document.getElementById('mes-atual').textContent = mesAtual.charAt(0).toUpperCase() + mesAtual.slice(1);
+  if (perfil === 'Técnico' && tecnicoId) {
+    resumo.classList.remove('hidden');
+    // Buscar chamados do técnico
+    const chamadosResp = await fetch(`https://localhost:5001/api/chamados/colaborador/${tecnicoId}`);
+    const chamados = await chamadosResp.json();
+    // Filtrar chamados do mês atual
+    const now = new Date();
+    const chamadosMes = chamados.filter(c => {
+      if (!c.dataAbertura) return false;
+      const data = new Date(c.dataAbertura);
+      return data.getMonth() === now.getMonth() && data.getFullYear() === now.getFullYear();
+    });
+    let resolvidos = 0, andamento = 0, criticos = 0, tempoTotal = 0, fechados = 0;
+    chamadosMes.forEach(c => {
+      if (c.status === 'Fechado') {
+        resolvidos++;
+        fechados++;
+        // Calcular tempo médio (se possível)
+        if (c.dataAbertura && c.dataFechamento) {
+          const ini = new Date(c.dataAbertura);
+          const fim = new Date(c.dataFechamento);
+          tempoTotal += (fim - ini) / (1000 * 60 * 60); // horas
+        }
+      } else if (c.status === 'EmAndamento') {
+        andamento++;
+      }
+      if (c.status !== 'Fechado' && c.prioridade === 'Crítica') criticos++;
+    });
+    document.getElementById('resumo-resolvidos').textContent = resolvidos;
+    document.getElementById('resumo-andamento').textContent = andamento;
+    document.getElementById('resumo-criticos').textContent = criticos;
+    document.getElementById('resumo-tempo-medio').textContent = fechados > 0 ? (tempoTotal / fechados).toFixed(1) + 'h' : '-';
+    // Dicas motivacionais aleatórias
+    const dicas = [
+      'Registrar detalhes na solução agiliza o aceite do cliente!',
+      'Priorize chamados críticos para manter o SLA em alta!',
+      'Mantenha o cliente informado sobre o andamento do chamado.',
+      'Organize seu dia resolvendo chamados mais antigos primeiro.',
+      'Parabéns pelo seu empenho! Continue assim.'
+    ];
+    document.getElementById('dica-motivacional').textContent = dicas[Math.floor(Math.random() * dicas.length)];
+  } else {
+    resumo.classList.add('hidden');
+  }
+}
+
+// Função para decodificar JWT (igual do login.js)
+function parseJwt (token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return {};
+  }
+}
+// Substituir chamada do gráfico de linha no carregamento da página para alternar entre técnico e gestor
+// Adicione a função JS para buscar e atualizar os KPIs
+async function carregarKpis() {
+  const token = localStorage.getItem('jwt_token');
+  let perfil = null, tecnicoId = null;
+  if (token) {
+    const payload = parseJwt(token);
+    perfil = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    tecnicoId = payload.sub ? parseInt(payload.sub) : null;
+  }
+  let url = 'https://localhost:5001/api/chamados/kpis';
+  if (perfil === 'Técnico' && tecnicoId) {
+    url += `?tecnicoId=${tecnicoId}`;
+  }
+  const resp = await fetch(url);
+  const kpis = await resp.json();
+  document.querySelector('.card-total-chamados').textContent = kpis.totalChamados;
+  document.querySelector('.card-tempo-medio').textContent = kpis.tempoMedioResolucao + 'h';
+  document.querySelector('.card-sla').textContent = kpis.slaAtendimento + '%';
+  document.querySelector('.card-fora-prazo').textContent = kpis.foraDoPrazo;
+}
+// Função para preencher selects de filtros dinamicamente
+async function preencherFiltrosRelatorios() {
+  // Exemplo de endpoints, ajuste conforme seu backend
+  const tecnicosResp = await fetch('https://localhost:5001/api/usuarios/tecnicos');
+  const tecnicos = await tecnicosResp.json();
+  const tecnicoSelect = document.getElementById('tecnico');
+  if (tecnicoSelect) {
+    tecnicoSelect.innerHTML = '<option value="">Todos os técnicos</option>';
+    tecnicos.forEach(t => {
+      tecnicoSelect.innerHTML += `<option value="${t.id}">${t.nome}</option>`;
+    });
+  }
+  // Setores
+  const setoresResp = await fetch('https://localhost:5001/api/setores');
+  const setores = await setoresResp.json();
+  const setorSelect = document.getElementById('setor');
+  if (setorSelect) {
+    setorSelect.innerHTML = '<option value="">Todos os setores</option>';
+    setores.forEach(s => {
+      setorSelect.innerHTML += `<option value="${s}">${s}</option>`;
+    });
+  }
+  // Tipos de problema
+  const tiposResp = await fetch('https://localhost:5001/api/tipos-problema');
+  const tipos = await tiposResp.json();
+  const tipoSelect = document.getElementById('tipo-problema');
+  if (tipoSelect) {
+    tipoSelect.innerHTML = '<option value="">Todos os tipos</option>';
+    tipos.forEach(tp => {
+      tipoSelect.innerHTML += `<option value="${tp}">${tp}</option>`;
+    });
+  }
+  // Prioridades
+  const prioridadesResp = await fetch('https://localhost:5001/api/prioridades');
+  const prioridades = await prioridadesResp.json();
+  const prioridadeSelect = document.getElementById('prioridade');
+  if (prioridadeSelect) {
+    prioridadeSelect.innerHTML = '<option value="">Todas as prioridades</option>';
+    prioridades.forEach(p => {
+      prioridadeSelect.innerHTML += `<option value="${p}">${p}</option>`;
+    });
+  }
+  // Status
+  const statusResp = await fetch('https://localhost:5001/api/status-chamados');
+  const statusList = await statusResp.json();
+  const statusSelect = document.getElementById('status');
+  if (statusSelect) {
+    statusSelect.innerHTML = '<option value="">Todos os status</option>';
+    statusList.forEach(st => {
+      statusSelect.innerHTML += `<option value="${st}">${st}</option>`;
+    });
+  }
+}
+// Chame a função ao carregar a página
+window.addEventListener('DOMContentLoaded', () => {
+  carregarKpis();
+  carregarGraficoStatusChamados();
+  carregarGraficoTecnicosChamados();
+  exibirPainelOuGraficoTecnico();
+  const token = localStorage.getItem('jwt_token');
+  let perfil = null;
+  if (token) {
+    const payload = parseJwt(token);
+    perfil = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+  }
+  if (perfil === 'Técnico') {
+    carregarGraficoEvolucaoTecnico();
+  } else if (perfil === 'Gestor' || perfil === 'Administrador') {
+    carregarGraficoEvolucaoGeral();
+  }
+  exibirResumoTecnico();
+  preencherFiltrosRelatorios(); // Adicionado para preencher os selects
+});
+</script>
+</html> 

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Techtools - Fila de Atendimento</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    /* Cores da Marca e Estilos Consistentes */
+    .bg-primary { background-color: #27a3df; }
+    .text-primary { color: #27a3df; }
+    .border-primary { border-color: #27a3df; }
+    .hover-bg-primary:hover { background-color: #1d8ebf; }
+    
+    .tab-active {
+      color: #27a3df;
+      font-weight: 600;
+      background-color: #eff6ff;
+      border-radius: 6px;
+    }
+    .queue-tab-active {
+        color: #27a3df;
+        border-bottom: 2px solid #27a3df;
+        font-weight: 600;
+    }
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .status-aberto { background-color: #eff6ff; color: #1e40af; }
+    .status-andamento { background-color: #fef9c3; color: #854d0e; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  
+  <header class="bg-white shadow-sm w-full z-50">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="logo flex items-center space-x-3">
+          <img src="images/logo2.png" alt="Techtools Logo" class="h-10 w-10 bg-white p-1 rounded-lg">
+          <h1 class="text-2xl font-bold text-gray-800">Techtools</h1>
+        </div>
+        <div class="flex items-center space-x-6">
+          <button aria-label="Notificações" class="text-gray-500 hover:text-primary relative"><i class="fas fa-bell text-xl"></i></button>
+          <div class="flex items-center space-x-3">
+            <img alt="Avatar do técnico" class="w-9 h-9 rounded-full" src="https://storage.googleapis.com/a1aa/image/e4a14e45-6fc6-4f88-0967-8b29ec919448.jpg"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="bg-white border-t border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center space-x-2 sm:space-x-4 py-2">
+        <a href="tecnicos.html" class="px-3 py-2 text-sm tab-active">Fila de Atendimento</a>
+        <a href="base_conhecimento.html" class="px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-primary rounded-md">Base de Conhecimento</a>
+        <a href="relatorios.html" class="px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-primary rounded-md">Relatórios Pessoais</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="py-8">
+    <div class="container mx-auto px-4">
+      <div class="max-w-7xl mx-auto space-y-6">
+        <h1 class="text-3xl font-bold text-gray-800">Fila de Atendimento</h1>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="cards-fila-tecnico">
+          <!-- Cards dinâmicos da fila do técnico serão renderizados aqui via JS -->
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-sm">
+          <div class="border-b border-gray-200">
+            <div class="flex px-2">
+              <button class="px-4 py-3 text-sm font-medium queue-tab-active">Minha Fila (8)</button>
+              <button class="px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-800">Aguardando Cliente (2)</button>
+              <button class="px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-800">Resolvidos Hoje (4)</button>
+            </div>
+          </div>
+          
+          <div id="fila-container" class="p-4 space-y-3">
+            <!-- Fila dinâmica de chamados será renderizada aqui via JS -->
+          </div>
+          <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 rounded-b-xl">
+            <p class="text-sm text-gray-700">Mostrando <strong>1</strong> a <strong>5</strong> de <strong>8</strong> resultados</p>
+            <nav class="inline-flex rounded-md shadow-sm -space-x-px"><a href="#" class="px-3 py-1.5 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"><i class="fas fa-chevron-left"></i></a><a href="#" class="px-3 py-1.5 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"><i class="fas fa-chevron-right"></i></a></nav>
+           </div>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm mt-8">
+          <h2 class="text-xl font-bold text-gray-800 mb-4">Chamados da Minha Especialidade</h2>
+          <div id="fila-especialidade-container" class="p-4 space-y-3">
+            <p class="text-gray-500">Carregando chamados...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="../js/fila-tecnico.js"></script>
+  <script>
+// Função para preencher selects de filtros da fila do técnico
+async function preencherFiltrosTecnicos() {
+  // Exemplo: tipos de problema
+  const tiposResp = await fetch('https://localhost:5001/api/tipos-problema');
+  const tipos = await tiposResp.json();
+  const tipoSelect = document.getElementById('filtro-tipo');
+  if (tipoSelect) {
+    tipoSelect.innerHTML = '<option value="">Todos os tipos</option>';
+    tipos.forEach(tp => {
+      tipoSelect.innerHTML += `<option value="${tp}">${tp}</option>`;
+    });
+  }
+  // Exemplo: status
+  const statusResp = await fetch('https://localhost:5001/api/status-chamados');
+  const statusList = await statusResp.json();
+  const statusSelect = document.getElementById('filtro-status');
+  if (statusSelect) {
+    statusSelect.innerHTML = '<option value="">Todos os status</option>';
+    statusList.forEach(st => {
+      statusSelect.innerHTML += `<option value="${st}">${st}</option>`;
+    });
+  }
+}
+window.addEventListener('DOMContentLoaded', preencherFiltrosTecnicos);
+</script>
+</body>
+</html>

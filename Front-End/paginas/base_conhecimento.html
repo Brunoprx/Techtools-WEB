@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Techtools - Base de Conhecimento</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    /* Cores da Marca e Estilos Base da Aplicação */
+    .bg-primary { background-color: #27a3df; }
+    .text-primary { color: #27a3df; }
+    .border-primary { border-color: #27a3df; }
+    .hover-bg-primary:hover { background-color: #1d8ebf; }
+
+    /* Estilo da Aba de Navegação Ativa (Padrão Techtools) */
+    .tab-active {
+      color: #27a3df;
+      font-weight: 600;
+      background-color: #eff6ff; /* bg-blue-50 */
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  
+  <header class="bg-white shadow-sm w-full z-50">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="logo flex items-center space-x-3">
+          <img src="images/logo2.png" alt="Techtools Logo" class="h-10 w-10 bg-white p-1 rounded-lg">
+          <h1 class="text-2xl font-bold text-gray-800">Techtools</h1>
+        </div>
+        <div class="flex items-center space-x-6">
+          <button aria-label="Notificações" class="text-gray-500 hover:text-primary relative">
+            <i class="fas fa-bell text-xl"></i>
+          </button>
+          <div class="flex items-center space-x-3">
+            <img alt="Avatar do técnico" class="w-9 h-9 rounded-full" src="https://storage.googleapis.com/a1aa/image/e4a14e45-6fc6-4f88-0967-8b29ec919448.jpg"/>
+            <div class="hidden md:block">
+                <p class="text-sm font-medium text-gray-700">Técnico</p>
+                <p class="text-xs text-gray-500">Meu Perfil</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="bg-white border-t border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center space-x-2 sm:space-x-4 py-2 overflow-x-auto">
+        <a href="colaborador.html" class="px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-primary rounded-md transition-colors duration-200">Novo Chamado</a>
+        <a href="chamados.html" class="px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-primary rounded-md transition-colors duration-200">Meus Chamados</a>
+        <a href="historico.html" class="px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-primary rounded-md transition-colors duration-200">Histórico</a>
+        <a href="base-de-conhecimento.html" class="px-3 py-2 text-sm tab-active whitespace-nowrap">Base de Conhecimento</a>
+        <div class="flex-grow"></div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="py-8">
+    <div class="container mx-auto px-4">
+      <section class="mb-8">
+        <div class="flex items-center space-x-3">
+            <i class="fas fa-book-open text-3xl text-gray-400"></i>
+            <h1 class="text-3xl font-bold text-gray-800">Base de Conhecimento</h1>
+        </div>
+        <div class="mt-6 bg-blue-50 border border-blue-200 text-blue-800 rounded-xl p-4 flex items-start space-x-3 max-w-4xl">
+            <i class="fas fa-info-circle mt-1 text-blue-500"></i>
+            <p><strong>Dica da Techtools:</strong> Use esta base para consultar rapidamente os SLAs, guias de diagnóstico e procedimentos operacionais padrão da nossa equipe.</p>
+        </div>
+      </section>
+
+      <div class="grid lg:grid-cols-4 gap-8">
+        <aside class="lg:col-span-1 space-y-8">
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Guias Técnicos</h2>
+            <ul class="space-y-3">
+              <li class="flex items-center space-x-2"><i class="fas fa-laptop-medical text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">Diagnóstico de Hardware</a></li>
+              <li class="flex items-center space-x-2"><i class="fas fa-compact-disc text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">Instalação de Software Padrão</a></li>
+              <li class="flex items-center space-x-2"><i class="fas fa-shield-alt text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">Remoção de Malware</a></li>
+              <li class="flex items-center space-x-2"><i class="fas fa-network-wired text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">Configuração de VPN</a></li>
+              <li class="flex items-center space-x-2"><i class="fas fa-envelope-open-text text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">Padrões de Resposta</a></li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Processos e SLAs</h2>
+            <ul class="space-y-3">
+              <li class="flex items-center space-x-2"><i class="fas fa-file-signature text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">Abertura de Chamado</a></li>
+              <li class="flex items-center space-x-2"><i class="fas fa-brain text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">Classificação de Prioridades (IA)</a></li>
+              <li class="flex items-center space-x-2"><i class="fas fa-hourglass-half text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">SLA de Atendimento</a></li>
+              <li class="flex items-center space-x-2"><i class="fas fa-tasks text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">Encaminhamento de Chamados</a></li>
+              <li class="flex items-center space-x-2"><i class="fas fa-check-double text-gray-400"></i><a href="#" class="text-gray-700 hover:text-primary">Fechamento e Aceite</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="lg:col-span-3">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Guias e Processos em Destaque</h2>
+                <button onclick="abrirModalCriar()" class="bg-primary text-white px-4 py-2 rounded-lg font-semibold hover-bg-primary transition flex items-center gap-2">
+                    <i class="fas fa-plus"></i> Novo Artigo
+                </button>
+            </div>
+            
+            <!-- Controles de busca e filtros -->
+            <div class="mb-6 flex gap-3 flex-wrap">
+                <input id="searchInput" type="text" placeholder="Buscar artigos..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg"/>
+                <select id="categoryFilter" class="px-4 py-2 border border-gray-300 rounded-lg">
+                    <option value="">Todas as categorias</option>
+                    <option value="Hardware">Hardware</option>
+                    <option value="Software">Software</option>
+                    <option value="Rede">Rede</option>
+                    <option value="Sistema">Sistema</option>
+                    <option value="Processos">Processos</option>
+                    <option value="Segurança">Segurança</option>
+                    <option value="Outros">Outros</option>
+                </select>
+                <select id="sortFilter" class="px-4 py-2 border border-gray-300 rounded-lg">
+                    <option value="dataCriacao">Mais recentes</option>
+                    <option value="titulo">Título A-Z</option>
+                    <option value="categoria">Categoria</option>
+                </select>
+            </div>
+            
+            <!-- Grid de artigos -->
+            <div id="destaqueGrid" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+            
+            <!-- Paginação -->
+            <div id="pagination" class="mt-6 flex justify-center items-center space-x-2"></div>
+        </section>
+
+     </div>
+   </main>
+
+   <!-- Modais dinâmicos -->
+   <!-- Modal de artigo -->
+   <div id="articleModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+     <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+       <div class="flex items-center justify-between p-6 border-b border-gray-200">
+         <h2 id="modalTitle" class="text-2xl font-bold text-gray-800">Novo Artigo</h2>
+         <button onclick="fecharModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+       </div>
+       <form id="articleForm" class="p-6">
+         <input type="hidden" id="articleId" name="id">
+         <div class="mb-6">
+           <label for="titulo" class="block text-sm font-semibold text-gray-700 mb-2">Título *</label>
+           <input type="text" id="titulo" name="titulo" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+         </div>
+         <div class="mb-6">
+           <label for="categoria" class="block text-sm font-semibold text-gray-700 mb-2">Categoria *</label>
+           <select id="categoria" name="categoria" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+             <option value="">Selecione uma categoria</option>
+             <option value="Hardware">Hardware</option>
+             <option value="Software">Software</option>
+             <option value="Rede">Rede</option>
+             <option value="Sistema">Sistema</option>
+             <option value="Outros">Outros</option>
+           </select>
+         </div>
+         <div class="mb-6">
+           <label for="conteudo" class="block text-sm font-semibold text-gray-700 mb-2">Conteúdo *</label>
+           <textarea id="conteudo" name="conteudo" required rows="6" placeholder="Descreva a solução, procedimento ou documentação..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-vertical"></textarea>
+         </div>
+         <div class="mb-6">
+           <label for="palavrasChave" class="block text-sm font-semibold text-gray-700 mb-2">Palavras-chave</label>
+           <input type="text" id="palavrasChave" name="palavrasChave" placeholder="Separe as palavras-chave por vírgula" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+         </div>
+         <div class="mb-6">
+           <label for="imagemArquivo" class="block text-sm font-semibold text-gray-700 mb-2">Imagem de Capa</label>
+           <input type="file" id="imagemArquivo" name="imagemArquivo" accept="image/*" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+           <div id="previewImagem" class="mt-2"></div>
+         </div>
+         <div class="flex gap-3 justify-end pt-6 border-t border-gray-200">
+           <button type="button" onclick="fecharModal()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-200 font-semibold">Cancelar</button>
+           <button type="submit" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 font-semibold flex items-center gap-2"><i class="fas fa-save"></i>Salvar Artigo</button>
+         </div>
+       </form>
+     </div>
+   </div>
+   <!-- Modal de exclusão -->
+   <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+     <div class="bg-white rounded-xl shadow-2xl w-full max-w-md">
+       <div class="flex items-center justify-between p-6 border-b border-gray-200">
+         <h2 class="text-xl font-bold text-gray-800">Confirmar Exclusão</h2>
+         <button onclick="fecharModalDelete()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+       </div>
+       <div class="p-6">
+         <p class="text-gray-600 mb-6">Tem certeza que deseja excluir o artigo "<span id="deleteArticleTitle" class="font-semibold"></span>"? Esta ação não pode ser desfeita.</p>
+         <div class="flex gap-3 justify-end">
+           <button onclick="fecharModalDelete()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-200 font-semibold">Cancelar</button>
+           <button onclick="confirmarExclusao()" class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-3 rounded-lg hover:from-red-600 hover:to-pink-700 transition-all duration-200 font-semibold flex items-center gap-2"><i class="fas fa-trash"></i>Excluir</button>
+         </div>
+       </div>
+     </div>
+   </div>
+
+   <footer class="bg-gray-800 text-white mt-12">
+     <div class="container mx-auto px-4 py-6">
+       <div class="text-center text-sm text-gray-400">
+         <p>&copy; 2025 Techtools. Todos os direitos reservados.</p>
+       </div>
+     </div>
+   </footer>
+
+   <script src="../js/base_conhecimento.js"></script>
+</body>
+</html>

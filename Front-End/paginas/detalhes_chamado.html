@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Techtools - Detalhes do Chamado</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .bg-primary { background-color: #27a3df; }
+    .text-primary { color: #27a3df; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  
+  <header class="bg-white shadow-sm w-full z-50">
+    </header>
+
+  <nav class="bg-white border-t border-gray-200">
+     </nav>
+
+  <main class="py-8">
+    <div class="container mx-auto px-4">
+      <button onclick="window.history.back()" class="mb-6 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg flex items-center"><i class="fas fa-arrow-left mr-2"></i>Voltar</button>
+      <div class="grid lg:grid-cols-3 gap-8">
+
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-xl shadow-sm p-6 sm:p-8">
+            <h1 id="chamado-titulo" class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Carregando detalhes...</h1>
+            
+            <form class="space-y-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1" for="form-titulo">Título do Chamado</label>
+                  <input id="form-titulo" class="w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-lg text-sm" type="text" disabled/>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="form-categoria">Tipo de Problema</label>
+                    <input id="form-categoria" class="w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-lg text-sm" type="text" disabled/>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="form-urgencia">Nível de Urgência</label>
+                    <input id="form-urgencia" class="w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-lg text-sm" type="text" disabled/>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1" for="form-descricao">Descrição Detalhada</label>
+                  <textarea id="form-descricao" class="w-full px-4 py-2 bg-gray-100 border border-gray-200 rounded-lg text-sm" rows="5" disabled></textarea>
+                </div>
+                <div id="anexos-container" class="mb-4"></div>
+              </form>
+
+              <div id="secao-aceitar" class="flex justify-end pt-6 border-t border-gray-200 mt-6" style="display: none;">
+                  <button id="btn-aceitar-chamado" class="px-8 py-2.5 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 shadow-sm flex items-center">
+                      <i class="fas fa-check-circle mr-2"></i> Aceitar e Iniciar Atendimento
+                  </button>
+              </div>
+          
+              <div id="secao-solucao" class="pt-6 border-t border-gray-200 mt-6" style="display: none;">
+                  <h3 class="text-lg font-semibold text-gray-800 mb-3">Registrar Solução</h3>
+                  <div>
+                      <label for="textarea-solucao" class="block text-sm font-medium text-gray-700 mb-1">Descrição da Solução Aplicada</label>
+                      <textarea id="textarea-solucao" rows="4" class="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm" placeholder="Descreva detalhadamente a solução..."></textarea>
+                  </div>
+                  <div class="mt-4">
+                    <label for="input-anexo-solucao" class="block text-sm font-medium text-gray-700 mb-1">Anexar Imagem (Opcional)</label>
+                    <input id="input-anexo-solucao" type="file" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0"/>
+                  </div>
+                  <div class="flex justify-between mt-4">
+                      <button id="btn-reencaminhar-chamado" class="px-6 py-2.5 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600">
+                          <i class="fas fa-share mr-2"></i> Reencaminhar Chamado
+                      </button>
+                      <button id="btn-enviar-solucao" class="px-8 py-2.5 bg-primary text-white rounded-lg text-sm font-medium hover-bg-primary">Enviar Solução para o Cliente</button>
+                  </div>
+              </div>
+          
+              <div id="secao-validacao-colaborador" class="pt-6 border-t border-gray-200 mt-6" style="display: none;">
+                  <h3 class="text-lg font-semibold text-gray-800 mb-3">Solução Proposta pelo Técnico</h3>
+                  <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                      <p id="texto-solucao" class="text-gray-700 whitespace-pre-wrap">Carregando solução...</p>
+                  </div>
+                  
+                  <div class="flex justify-end items-center space-x-3">
+                      <button id="btn-rejeitar-solucao" class="px-6 py-2 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50">Rejeitar Solução</button>
+                      <button id="btn-confirmar-solucao" class="px-8 py-2.5 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 shadow-sm">Aceitar e Fechar Chamado</button>
+                  </div>
+              </div>
+  
+            </div>
+          </div>
+
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Informações Gerais</h2>
+                <div class="space-y-4">
+                    <div><p class="text-xs text-gray-500">Solicitante</p><p id="solicitante-nome" class="font-medium">...</p></div>
+                    <div><p class="text-xs text-gray-500">E-mail</p><p id="solicitante-email" class="font-medium">...</p></div>
+                    <div><p class="text-xs text-gray-500">Setor</p><p id="solicitante-setor" class="font-medium">...</p></div>
+                    <div><p class="text-xs text-gray-500">Data de Abertura</p><p id="chamado-data-abertura" class="font-medium">...</p></div>
+                    <div><p class="text-xs text-gray-500">Status Atual</p><p id="chamado-status" class="font-bold text-primary">...</p></div>
+                    <div><p class="text-xs text-gray-500">Prioridade Definida</p><p id="chamado-prioridade" class="font-bold text-primary">...</p></div>
+                </div>
+            </div>
+
+            <!-- Seção de Histórico -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Histórico do Chamado</h2>
+                <div id="historico-container" class="space-y-3 max-h-64 overflow-y-auto">
+                    <p class="text-sm text-gray-500">Carregando histórico...</p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de Reencaminhamento -->
+  <div id="modal-reencaminhar" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50" style="display: none;">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div class="mt-3">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Reencaminhar Chamado</h3>
+        <div class="mb-4">
+          <label for="select-novo-tecnico" class="block text-sm font-medium text-gray-700 mb-2">Selecione o novo técnico:</label>
+          <select id="select-novo-tecnico" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+            <option value="">Carregando técnicos...</option>
+          </select>
+        </div>
+        <div class="flex justify-end space-x-3">
+          <button id="btn-cancelar-reencaminhar" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-400">
+            Cancelar
+          </button>
+          <button id="btn-confirmar-reencaminhar" class="px-4 py-2 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600">
+            Reencaminhar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../js/detalhes-chamado.js"></script>
+</body>
+</html>
