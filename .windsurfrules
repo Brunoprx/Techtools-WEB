@@ -1,0 +1,102 @@
+Responda sempre em português do Brasil.
+
+O Objetivo Principal
+"Sua tarefa é continuar o desenvolvimento do Módulo de Chamados do sistema integrado TechTools, com base na arquitetura e nas regras de negócio já estabelecidas. O objetivo é 'polir' o módulo, implementando as funcionalidades secundárias restantes, corrigindo eventuais bugs e garantindo que a experiência do usuário seja coesa e completa."
+
+3. A Arquitetura Estabelecida (A Fonte da Verdade Técnica)
+
+A implementação deve seguir rigorosamente a arquitetura e os padrões já existentes no projeto:
+
+Arquitetura: Clean Architecture, com uma separação estrita em quatro projetos:
+
+Core (Domain): Contém as entidades de negócio (Chamado, Colaborador, Anexo, TecnicoEspecialidade) e as regras de negócio puras encapsuladas como métodos dentro dessas entidades.
+
+Application: Orquestra os casos de uso através do padrão CQRS com MediatR. Contém os Commands (ações que modificam dados), Queries (solicitações de dados), seus respectivos Handlers, ViewModels e as Interfaces dos repositórios.
+
+Infrastructure: Implementa os detalhes técnicos, como o acesso ao banco de dados MariaDB/MySQL via Entity Framework Core e a implementação concreta dos repositórios.
+
+Presentation (API): É uma API web em ASP.NET Core 8 que expõe os endpoints para o front-end e lida com a autenticação.
+
+Padrões:
+
+CQRS com MediatR: Cada ação do usuário é um Command ou Query distinto.
+
+Injeção de Dependência: Utilizada extensivamente no Program.cs para registrar serviços e repositórios.
+
+Padrão Repositório: Abstrai o acesso a dados (IChamadoRepository, IColaboradorRepository).
+
+Arquitetura de Dados (Multi-Tenant):
+
+O sistema é projetado para ser Multi-Tenant (atender múltiplas empresas).
+
+Tabelas críticas como usuarios e chamado possuem uma coluna id_empresa.
+
+Toda e qualquer consulta ao banco de dados nos repositórios deve obrigatoriamente filtrar pelo id_empresa do usuário autenticado.
+
+O id_empresa é incluído como uma claim no Token JWT durante o login e extraído em cada requisição na camada de Controller.
+
+4. Regras de Negócio Implementadas e o Fluxo Atual
+
+O sistema já possui um fluxo funcional completo para o ciclo de vida de um chamado.
+
+Autenticação e Autorização:
+
+O login é feito via POST /api/autenticacao/login com e-mail e senha.
+
+O back-end valida as credenciais (comparando o hash da senha, a ser implementado), busca o id_empresa do usuário no banco e gera um Token JWT contendo o ID do usuário, o id_empresa e o perfil_acesso (role).
+
+Os endpoints dos controllers (ChamadosController, UsuariosController) são protegidos com [Authorize].
+
+O front-end armazena o token e o envia no cabeçalho Authorization: Bearer <token> em todas as requisições.
+
+O login redireciona o usuário para a página correta com base no seu perfil (tecnicos.html para 'Técnico', chamados.html para outros).
+
+Fluxo de um Chamado:
+
+Criação: Um colaborador logado abre um chamado com anexos.
+
+Roteamento Automático: O back-end utiliza a tabela tecnico_especialidade para atribuir o chamado a um técnico especialista com base na categoria, iniciando o status como EmAndamento.
+
+Atendimento: O técnico visualiza o chamado e, na página de detalhes, registra uma solução com anexos. O status muda para PendenteAceite.
+
+Validação: O colaborador visualiza a solução e os anexos. Ele pode:
+
+Rejeitar: Fornecendo um motivo. O status volta para EmAndamento, a solução é limpa e o motivo é adicionado ao histórico.
+
+Aceitar: O status muda para Fechado, finalizando o ciclo.
+
+5. A Tarefa Detalhada (O Que Falta Fazer)
+
+"Com base no contexto acima, sua tarefa é implementar as seguintes funcionalidades para finalizar o Módulo de Chamados:"
+
+Funcionalidade 1: Filtros na Tela do Técnico:
+
+Objetivo: Dar vida aos filtros de status e tipo na página tecnicos.html.
+
+Implementação: No js/fila-tecnico.js, adicione event listeners aos dropdowns de filtro. Ao mudar a seleção, a função carregarFilaDeChamados deve ser chamada novamente, incluindo os valores dos filtros como parâmetros de query na URL da API (ex: .../api/chamados/fila?status=Aberto). O back-end já está preparado para receber esses filtros.
+
+Funcionalidade 2: Dashboard Dinâmico (Cards de Resumo):
+
+Objetivo: Fazer com que os números nos cards de resumo ("Novos na Fila", "Em Andamento", etc.) nas telas chamados.html e tecnicos.html sejam dinâmicos.
+
+Implementação:
+
+Back-end: Crie um novo endpoint (ex: GET /api/chamados/dashboard) e sua respectiva Query/Handler que execute consultas de contagem (.Count()) no banco de dados, agrupadas por status, sempre filtrando pelo EmpresaId do usuário logado.
+
+Front-end: Nos scripts meus-chamados.js e fila-tecnico.js, crie uma nova função que chame este novo endpoint e preencha os valores nos cards usando document.getElementById.
+
+Funcionalidade 3: Ação de Reencaminhar Chamado:
+
+Objetivo: Permitir que um técnico reatribua um chamado para outro técnico.
+
+Implementação:
+
+Back-end: Crie um ReencaminharChamadoCommand e seu Handler. A lógica no handler irá validar as permissões e simplesmente alterar o id_tecnico do chamado no banco.
+
+Front-end: Na página detalhes_chamado.html, adicione um botão "Reencaminhar". Ao ser clicado, ele pode abrir um modal com uma lista de outros técnicos da mesma empresa (buscados de um novo endpoint GET /api/usuarios?perfil=Técnico) para que o usuário selecione o novo responsável.
+
+Funcionalidade 4: Segurança de Senhas (Refatoração Crítica):
+
+Objetivo: Substituir a comparação de senhas em texto puro no LoginCommandHandler.cs.
+
+Implementação: Adicione a biblioteca BCrypt.Net-Next ao projeto Application. Modifique o CriarUsuarioCommandHandler para que, ao criar um usuário, ele gere um hash da senha (BCrypt.Net.BCrypt.HashPassword(senha)). Modifique o LoginCommandHandler para verificar a senha usando BCrypt.Net.BCrypt.Verify(senhaDoUsuario, hashDoBanco).

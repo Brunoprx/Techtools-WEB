@@ -14,7 +14,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.AdicionarSoluc
 
         public async Task Handle(AdicionarSolucaoCommand request, CancellationToken cancellationToken)
         {
-            var chamado = await _chamadoRepository.ObterPorId(request.ChamadoId);
+            var chamado = await _chamadoRepository.ObterPorId(request.ChamadoId, request.EmpresaId); 
             if (chamado == null) throw new Exception("Chamado não encontrado.");
 
             // Novamente, a entidade é quem sabe como se comportar.

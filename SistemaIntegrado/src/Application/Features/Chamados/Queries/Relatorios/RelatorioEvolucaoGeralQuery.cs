@@ -7,5 +7,6 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
     public class RelatorioEvolucaoGeralQuery : IRequest<List<EvolucaoGeralPorPeriodoViewModel>>
     {
         public string Periodo { get; set; } = "mes"; // "semana" ou "mes"
+        public int EmpresaId { get; set; }
     }
 } 

@@ -9,5 +9,6 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.ObterChamadosPo
         public int ColaboradorId { get; set; }
         public string? Status { get; set; } // Filtro por status
         public string? Tipo { get; set; }   // Filtro por tipo/categoria
+        public int EmpresaId { get; set; }
     }
 }

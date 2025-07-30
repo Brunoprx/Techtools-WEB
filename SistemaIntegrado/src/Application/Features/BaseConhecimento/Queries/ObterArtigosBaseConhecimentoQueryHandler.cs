@@ -20,19 +20,19 @@ namespace SistemaIntegrado.Application.Features.BaseConhecimento.Queries
 
             if (!string.IsNullOrEmpty(request.PalavraChave))
             {
-                artigos = await _artigoRepository.BuscarPorPalavraChave(request.PalavraChave);
+                artigos = await _artigoRepository.BuscarPorPalavraChave(request.PalavraChave, request.EmpresaId);
             }
             else if (!string.IsNullOrEmpty(request.Categoria))
             {
-                artigos = await _artigoRepository.BuscarPorCategoria(request.Categoria);
+                artigos = await _artigoRepository.BuscarPorCategoria(request.Categoria, request.EmpresaId);
             }
             else if (!string.IsNullOrEmpty(request.Tags))
             {
-                artigos = await _artigoRepository.BuscarPorTags(request.Tags);
+                artigos = await _artigoRepository.BuscarPorTags(request.Tags, request.EmpresaId);
             }
             else
             {
-                artigos = await _artigoRepository.ObterTodos();
+                artigos = await _artigoRepository.ObterTodos(request.EmpresaId);
             }
 
             return artigos.Select(a => new ArtigoBaseConhecimentoResumoViewModel

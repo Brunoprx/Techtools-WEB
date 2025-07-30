@@ -1,6 +1,7 @@
 using MediatR;
 using SistemaIntegrado.Application.Interfaces.Repositories;
 using SistemaIntegrado.Application.Features.Chamados.ViewModels;
+using SistemaIntegrado.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,7 +19,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
 
         public async Task<List<EvolucaoGeralPorPeriodoViewModel>> Handle(RelatorioEvolucaoGeralQuery request, CancellationToken cancellationToken)
         {
-            var chamados = await _chamadoRepository.ObterTodos();
+            var chamados = await _chamadoRepository.ObterTodos(request.EmpresaId);
             var agrupado = request.Periodo == "semana"
                 ? chamados.GroupBy(c => System.Globalization.ISOWeek.GetYear(c.DataAbertura ?? c.DataFechamento ?? System.DateTime.MinValue) + "-S" + System.Globalization.ISOWeek.GetWeekOfYear(c.DataAbertura ?? c.DataFechamento ?? System.DateTime.MinValue))
                 : chamados.GroupBy(c => (c.DataAbertura ?? c.DataFechamento ?? System.DateTime.MinValue).ToString("yyyy-MM"));

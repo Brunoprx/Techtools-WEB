@@ -39,5 +39,8 @@ namespace SistemaIntegrado.Domain.Entities
 
         [Column("id_empresa")]
         public int EmpresaId { get; set; }
+
+        [Column("status")]
+        public string Status { get; set; } = "Ativo";
     }
 }

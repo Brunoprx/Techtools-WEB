@@ -6,5 +6,6 @@ namespace SistemaIntegrado.Application.Features.BaseConhecimento.Commands
     {
         public int Id { get; set; }
         public int? AutorId { get; set; } // Para validação de autorização
+        public int EmpresaId { get; set; }
     }
 } 

@@ -20,7 +20,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.ObterChamadosPo
 
         public async Task<IEnumerable<ChamadoResumoViewModel>> Handle(ObterChamadosPorColaboradorQuery request, CancellationToken cancellationToken)
         {
-            var chamadosDoBanco = await _chamadoRepository.ObterPorColaboradorId(request.ColaboradorId, request.Status, request.Tipo);
+            var chamadosDoBanco = await _chamadoRepository.ObterPorColaboradorId(request.ColaboradorId, request.Status, request.Tipo, request.EmpresaId);
 
             // Mapeia os dados do banco para o ViewModel de resumo, garantindo que nenhum dado vá nulo
             var resultado = chamadosDoBanco.Select(c => new ChamadoResumoViewModel

@@ -8,5 +8,6 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
     {
         public int TecnicoId { get; set; }
         public string Periodo { get; set; } = "mes"; // "semana" ou "mes"
+        public int EmpresaId { get; set; }
     }
 } 

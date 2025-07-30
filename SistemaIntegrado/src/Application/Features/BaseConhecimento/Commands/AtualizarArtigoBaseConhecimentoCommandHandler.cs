@@ -15,7 +15,7 @@ namespace SistemaIntegrado.Application.Features.BaseConhecimento.Commands
 
         public async Task<bool> Handle(AtualizarArtigoBaseConhecimentoCommand request, CancellationToken cancellationToken)
         {
-            var artigo = await _artigoRepository.ObterPorId(request.Id);
+            var artigo = await _artigoRepository.ObterPorId(request.Id, request.EmpresaId);
             
             if (artigo == null)
                 return false;

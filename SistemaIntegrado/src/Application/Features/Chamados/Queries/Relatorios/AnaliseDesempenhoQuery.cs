@@ -7,5 +7,6 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
     {
         public int? ColaboradorId { get; set; }
         public int? TecnicoId { get; set; }
+        public int EmpresaId { get; set; }
     }
 } 

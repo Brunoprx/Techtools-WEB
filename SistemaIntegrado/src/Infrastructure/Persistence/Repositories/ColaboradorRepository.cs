@@ -17,19 +17,24 @@ namespace SistemaIntegrado.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
+        public async Task<Colaborador?> ObterPorEmail(string email, int empresaId)
+        {
+            return await _context.Colaboradores.FirstOrDefaultAsync(c => c.EmailCorporativo == email && c.EmpresaId == empresaId);
+        }
+
         public async Task<Colaborador?> ObterPorEmail(string email)
         {
             return await _context.Colaboradores.FirstOrDefaultAsync(c => c.EmailCorporativo == email);
         }
 
-        public async Task<Colaborador?> ObterPorId(int id)
+        public async Task<Colaborador?> ObterPorId(int id, int empresaId)
         {
-            return await _context.Colaboradores.FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Colaboradores.FirstOrDefaultAsync(c => c.Id == id && c.EmpresaId == empresaId);
         }
 
-        public async Task<List<Colaborador>> ObterTodos()
+        public async Task<List<Colaborador>> ObterTodos(int empresaId)
         {
-            return await _context.Colaboradores.ToListAsync();
+            return await _context.Colaboradores.Where(c => c.EmpresaId == empresaId).ToListAsync();
         }
 
         public async Task<int?> ObterIdTecnicoPorEspecialidade(string categoria)

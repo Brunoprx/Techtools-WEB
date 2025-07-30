@@ -17,7 +17,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.RejeitarSoluca
 
         public async Task Handle(RejeitarSolucaoCommand request, CancellationToken cancellationToken)
         {
-            var chamado = await _chamadoRepository.ObterPorId(request.ChamadoId);
+            var chamado = await _chamadoRepository.ObterPorId(request.ChamadoId, request.EmpresaId); 
             if (chamado == null)
             {
                 throw new Exception("Chamado não encontrado.");

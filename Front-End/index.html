@@ -13,7 +13,6 @@
   </script>
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <!-- <link rel="stylesheet" href="chamados.css" /> -->
   <link rel="stylesheet" href="css/techsupport.css" />
   <link rel="stylesheet" href="css/footer.css" />
   <link rel="stylesheet" href="css/header.css" />
@@ -54,9 +53,20 @@
         transform: scale(1.1);
       }
     }
-    .ken-burns-bg {
-      animation: kenburns 20s ease-in-out infinite alternate;
-    }
+    .icon-container {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.icon-container:hover {
+    transform: scale(1.1);
+}
+
+.line-path {
+    stroke-width: 3;
+    fill: none;
+    transition: stroke-dashoffset 0.8s ease-in-out;
+}
   </style>
 </head>
 
@@ -91,9 +101,7 @@
           <a href="login.html" class="text-sm/6 font-semibold text-white bg-white/20 px-4 py-2 rounded-full hover:bg-white/30 transition-colors">Login <span aria-hidden="true">&rarr;</span></a>
         </div>
       </nav>
-      <!-- Mobile menu, show/hide based on menu open state. -->
       <div class="lg:hidden hidden" role="dialog" aria-modal="true" id="mobile-menu">
-        <!-- Background backdrop, show/hide based on slide-over state. -->
         <div class="fixed inset-0 z-50"></div>
         <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-[#27a3df] p-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
           <div class="flex items-center justify-between">
@@ -133,7 +141,6 @@
         <div class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-gradient-to-tr from-[#27a3df] to-[#1e40af] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
       </div>
       
-      <!-- Background Image -->
       <div class="absolute inset-0 bg-cover bg-center bg-no-repeat ken-burns-bg" style="background-image: url('images/Image_fx (4).jpg');">
         <div class="absolute inset-0 bg-black/70"></div>
       </div>
@@ -152,7 +159,7 @@
             Deixe a complexidade da TI conosco. Oferecemos suporte rápido, seguro e inteligente para que a sua equipe nunca pare de produzir.
           </p>
           <div class="mt-10 flex items-center justify-center gap-x-6" data-aos="fade-up" data-aos-delay="400">
-            <a href="login.html" class="rounded-full bg-[#27a3df] px-8 py-4 text-lg font-bold text-white shadow-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 uppercase tracking-wider">
+            <a href="login.html" class="rounded-full bg-[#27a3df] px-8 py-4 text-lg font-bold text-white shadow-lg uppercase tracking-wider transition-all duration-300 ease-in-out hover:bg-blue-600 hover:-translate-y-1 hover:scale-105 active:translate-y-0 active:scale-100 active:bg-blue-700">
               Conheça nossas soluções
             </a>
             <a href="#servicos" class="text-lg font-semibold text-white hover:text-gray-200 transition-colors">Saiba mais <span aria-hidden="true">→</span></a>
@@ -165,14 +172,15 @@
     </div>
   </div>
 
-  <!-- Serviços -->
   <section id="servicos" class="section py-16 bg-gray-100">
     <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12 text-[#27a3df] border-b-4 border-[#27a3df] pb-4 inline-block mx-auto">
-        NOSSOS SERVIÇOS
-      </h2>
+      <div class="text-center">
+        <h2 class="text-4xl font-bold text-center mb-12 text-[#27a3df] border-b-4 border-[#27a3df] pb-4 inline-block">
+          NOSSOS SERVIÇOS
+        </h2>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="service bg-white rounded-xl shadow-lg p-8 transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+        <div class="service bg-white rounded-xl shadow-lg p-8 transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
           <div class="text-center mb-6">
             <div class="bg-[#27a3df] bg-opacity-10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
               <i class="fas fa-desktop text-3xl text-[#27a3df]"></i>
@@ -186,7 +194,7 @@
           </p>
         </div>
         
-        <div class="service bg-white rounded-xl shadow-lg p-8 transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+        <div class="service bg-white rounded-xl shadow-lg p-8 transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
           <div class="text-center mb-6">
             <div class="bg-[#27a3df] bg-opacity-10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
               <i class="fas fa-network-wired text-3xl text-[#27a3df]"></i>
@@ -200,7 +208,7 @@
           </p>
         </div>
         
-        <div class="service bg-white rounded-xl shadow-lg p-8 transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+        <div class="service bg-white rounded-xl shadow-lg p-8 transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
           <div class="text-center mb-6">
             <div class="bg-[#27a3df] bg-opacity-10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
               <i class="fas fa-shield-virus text-3xl text-[#27a3df]"></i>
@@ -217,134 +225,254 @@
     </div>
   </section>
 
-  <!-- Como Funciona o Atendimento Inteligente -->
-  <section class="section py-16 bg-white">
+  <section class="section py-16 sm:py-24 bg-gray-50 overflow-hidden">
     <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12 text-[#27a3df] border-b-4 border-[#27a3df] pb-4 inline-block mx-auto">
-        Seu problema resolvido em 4 passos simples
-      </h2>
+      <div class="text-center mb-20">
+        <h2 class="text-4xl font-bold mb-4 text-gray-800">
+          Seu problema resolvido em 4 passos simples
+        </h2>
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto">
+          Nossa metodologia otimizada garante eficiência máxima no atendimento.
+        </p>
+      </div>
       
-      <!-- Timeline Visual -->
-      <div class="relative">
-        <!-- Linha conectora -->
-        <div class="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-[#27a3df] transform -translate-y-1/2 z-0"></div>
+      <div class="max-w-4xl mx-auto relative">
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-blue-100 rounded-full"></div>
         
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-          <!-- Passo 1 -->
-          <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
-            <div class="bg-[#27a3df] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i class="fas fa-keyboard text-2xl text-[#27a3df]"></i>
+        <div class="space-y-16">
+          
+          <div data-aos="fade-right" class="flex items-center relative">
+            <div class="w-1/2 pr-10">
+              <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200/80 text-right">
+                <div class="text-lg font-bold text-blue-500">01</div>
+                <h3 class="text-xl font-bold text-gray-800 my-2">Abertura Rápida</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">
+                  Portal intuitivo permite abertura de chamados em menos de 2 minutos.
+                </p>
+              </div>
             </div>
-            <div class="bg-[#27a3df] text-white text-sm font-bold px-3 py-1 rounded-full inline-block mb-4">Passo 1</div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Abertura Rápida</h3>
-            <p class="text-gray-700 text-sm leading-relaxed">
-              Você abre o chamado em menos de 2 minutos pelo nosso portal intuitivo.
-            </p>
+            <div class="absolute left-1/2 transform -translate-x-1/2 w-16 h-16 bg-[#27a3df] rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <i class="fas fa-keyboard text-3xl text-white"></i>
+            </div>
+            <div class="w-1/2 pl-10">
+              <div class="bg-white rounded-lg p-3 shadow-md border border-gray-200/80">
+                <div class="flex items-center space-x-3">
+                  <i class="fas fa-clock text-blue-500"></i>
+                  <span class="text-gray-700 text-sm font-medium">Tempo médio: 90s</span>
+                </div>
+              </div>
+            </div>
           </div>
           
-          <!-- Passo 2 -->
-          <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
-            <div class="bg-[#27a3df] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i class="fas fa-brain text-2xl text-[#27a3df]"></i>
+          <div data-aos="fade-left" class="flex items-center relative">
+            <div class="w-1/2 pr-10">
+               <div class="bg-white rounded-lg p-3 shadow-md border border-gray-200/80">
+                <div class="flex items-center space-x-3 justify-end">
+                  <span class="text-gray-700 text-sm font-medium">99% de precisão</span>
+                  <i class="fas fa-chart-line text-blue-500"></i>
+                </div>
+              </div>
             </div>
-            <div class="bg-[#27a3df] text-white text-sm font-bold px-3 py-1 rounded-full inline-block mb-4">Passo 2</div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Análise da IA</h3>
-            <p class="text-gray-700 text-sm leading-relaxed">
-              Nossa IA analisa e classifica a prioridade do chamado com 80% de precisão.
-            </p>
+            <div class="absolute left-1/2 transform -translate-x-1/2 w-16 h-16 bg-[#27a3df] rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <i class="fas fa-brain text-3xl text-white"></i>
+            </div>
+            <div class="w-1/2 pl-10 text-left">
+              <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200/80">
+                <div class="text-lg font-bold text-blue-500">02</div>
+                <h3 class="text-xl font-bold text-gray-800 my-2">Análise da IA</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">
+                  IA analisa o contexto e classifica a prioridade com base no impacto real.
+                </p>
+              </div>
+            </div>
           </div>
           
-          <!-- Passo 3 -->
-          <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
-            <div class="bg-[#27a3df] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i class="fas fa-rocket text-2xl text-[#27a3df]"></i>
+          <div data-aos="fade-right" class="flex items-center relative">
+            <div class="w-1/2 pr-10">
+              <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200/80 text-right">
+                <div class="text-lg font-bold text-blue-500">03</div>
+                <h3 class="text-xl font-bold text-gray-800 my-2">Solução Inteligente</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">
+                  Sistema oferece solução automática ou direciona para o especialista ideal.
+                </p>
+              </div>
             </div>
-            <div class="bg-[#27a3df] text-white text-sm font-bold px-3 py-1 rounded-full inline-block mb-4">Passo 3</div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Solução Imediata ou Encaminhamento</h3>
-            <p class="text-gray-700 text-sm leading-relaxed">
-              A IA sugere uma solução automática ou encaminha o chamado para o técnico mais adequado.
-            </p>
+            <div class="absolute left-1/2 transform -translate-x-1/2 w-16 h-16 bg-[#27a3df] rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <i class="fas fa-rocket text-3xl text-white"></i>
+            </div>
+            <div class="w-1/2 pl-10">
+              <div class="bg-white rounded-lg p-3 shadow-md border border-gray-200/80">
+                <div class="flex items-center space-x-3">
+                  <i class="fas fa-bolt text-blue-500"></i>
+                  <span class="text-gray-700 text-sm font-medium">80% resolução automática</span>
+                </div>
+              </div>
+            </div>
           </div>
           
-          <!-- Passo 4 -->
-          <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
-            <div class="bg-[#27a3df] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i class="fas fa-check-double text-2xl text-[#27a3df]"></i>
+          <div data-aos="fade-left" class="flex items-center relative">
+            <div class="w-1/2 pr-10">
+               <div class="bg-white rounded-lg p-3 shadow-md border border-gray-200/80">
+                <div class="flex items-center space-x-3 justify-end">
+                  <span class="text-gray-700 text-sm font-medium">100% aprovação</span>
+                  <i class="fas fa-thumbs-up text-blue-500"></i>
+                </div>
+              </div>
             </div>
-            <div class="bg-[#27a3df] text-white text-sm font-bold px-3 py-1 rounded-full inline-block mb-4">Passo 4</div>
-            <h3 class="text-xl font-bold mb-3 text-gray-900">Resolução e Feedback</h3>
-            <p class="text-gray-700 text-sm leading-relaxed">
-              O problema é resolvido dentro do SLA e o chamado só é fechado com a sua aprovação.
-            </p>
+            <div class="absolute left-1/2 transform -translate-x-1/2 w-16 h-16 bg-[#27a3df] rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <i class="fas fa-check-double text-3xl text-white"></i>
+            </div>
+            <div class="w-1/2 pl-10 text-left">
+              <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200/80">
+                <div class="text-lg font-bold text-blue-500">04</div>
+                <h3 class="text-xl font-bold text-gray-800 my-2">Resolução e Feedback</h3>
+                <p class="text-gray-600 leading-relaxed text-sm">
+                  O chamado só é fechado após sua aprovação, garantindo a satisfação.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+   <section class="section py-16 lg:py-24 bg-gray-50">
+    <div class="container mx-auto px-4">
+      
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold mb-4 text-gray-800">
+          Plataforma Robusta e Confiável
+        </h2>
+        <p class="text-xl text-gray-500 max-w-3xl mx-auto">
+          Tecnologia de ponta que garante performance excepcional para sua empresa.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+
+        <div class="bg-white rounded-3xl shadow-xl border border-gray-200/80 p-8 flex flex-col transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2" data-aos="fade-up">
+          <h3 class="text-xl font-bold text-gray-800 mb-6">Disponibilidade do Sistema</h3>
+          <div class="flex-grow flex flex-col items-center justify-center text-center">
+            <div class="relative w-48 h-48 flex items-center justify-center">
+              <svg class="absolute inset-0" viewBox="0 0 36 36">
+                <path class="text-gray-200" stroke-width="2" fill="none" stroke="currentColor" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                <path class="text-[#27a3df]" stroke-width="2" stroke-linecap="round" fill="none" stroke="currentColor" stroke-dasharray="99.9, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+              </svg>
+              <div class="text-center">
+                <span class="text-5xl font-black text-gray-800">99.9<span class="text-4xl">%</span></span>
+              </div>
+            </div>
+            <p class="mt-4 text-gray-500">Sistema sempre online com redundância total.</p>
+          </div>
+          <div class="mt-6 flex items-center justify-center space-x-2 text-sm text-green-600">
+            <div class="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse"></div>
+            <span>Status: Operacional</span>
           </div>
         </div>
+
+        <div class="bg-white rounded-3xl shadow-xl border border-gray-200/80 p-8 flex flex-col transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="text-xl font-bold text-gray-800 mb-6">Métricas da Infraestrutura</h3>
+          <div class="space-y-6 flex-grow">
+            <div>
+              <div class="flex justify-between items-end mb-1">
+                <h4 class="font-semibold text-gray-700">Performance</h4>
+                <p class="text-sm font-bold text-[#27a3df]">&lt; 2s</p>
+              </div>
+              <div class="bg-gray-200 rounded-full h-2.5 w-full">
+                <div class="bg-[#27a3df] h-2.5 rounded-full" style="width: 95%"></div>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Tempo de resposta da interface</p>
+            </div>
+            <div>
+              <div class="flex justify-between items-end mb-1">
+                <h4 class="font-semibold text-gray-700">Capacidade</h4>
+                <p class="text-sm font-bold text-green-600">500+ Usuários</p>
+              </div>
+              <div class="bg-gray-200 rounded-full h-2.5 w-full">
+                <div class="bg-green-500 h-2.5 rounded-full" style="width: 80%"></div>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Suporte a usuários simultâneos</p>
+            </div>
+            <div>
+              <div class="flex justify-between items-end mb-1">
+                <h4 class="font-semibold text-gray-700">Segurança</h4>
+                <p class="text-sm font-bold text-red-600">24/7</p>
+              </div>
+              <div class="bg-gray-200 rounded-full h-2.5 w-full">
+                <div class="bg-red-500 h-2.5 rounded-full" style="width: 100%"></div>
+              </div>
+               <p class="text-xs text-gray-500 mt-1">Backup e monitoramento contínuo</p>
+            </div>
+          </div>
+          <div class="mt-8">
+              <a href="#" class="w-full text-center block bg-blue-50 text-blue-600 font-semibold py-3 px-6 rounded-xl hover:bg-blue-100 transition-colors">
+                Otimizar Infraestrutura
+              </a>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl border border-gray-200/80 p-8 transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="text-xl font-bold text-gray-800 mb-6">Ecossistema de Tecnologia</h3>
+            <div class="space-y-6">
+                <div class="flex items-start space-x-4">
+                    <div class="bg-gray-100 p-4 rounded-xl">
+                        <i class="fas fa-cloud text-2xl text-[#27a3df]"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-700">Cloud AWS</h4>
+                        <p class="text-sm text-gray-500">Infraestrutura escalável e confiável para garantir a máxima disponibilidade.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="bg-gray-100 p-4 rounded-xl">
+                        <i class="fas fa-robot text-2xl text-[#27a3df]"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-700">IA Avançada</h4>
+                        <p class="text-sm text-gray-500">Modelos de Machine Learning para análise e automação de processos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-xl border border-gray-200/80 p-8 transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
+          <h3 class="text-xl font-bold text-gray-800 mb-6">Dados e Segurança</h3>
+          <div class="space-y-6">
+              <div class="flex items-start space-x-4">
+                  <div class="bg-gray-100 p-4 rounded-xl">
+                      <i class="fas fa-database text-2xl text-[#27a3df]"></i>
+                  </div>
+                  <div>
+                      <h4 class="font-semibold text-gray-700">Big Data</h4>
+                      <p class="text-sm text-gray-500">Análise de grandes volumes de dados em tempo real para insights precisos.</p>
+                  </div>
+              </div>
+              <div class="flex items-start space-x-4">
+                  <div class="bg-gray-100 p-4 rounded-xl">
+                      <i class="fas fa-lock text-2xl text-[#27a3df]"></i>
+                  </div>
+                  <div>
+                      <h4 class="font-semibold text-gray-700">Criptografia de Ponta</h4>
+                      <p class="text-sm text-gray-500">Segurança com SSL/TLS 256-bit para proteger todos os seus dados.</p>
+                  </div>
+              </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Tecnologia e Desempenho -->
-  <section class="section py-16 bg-gray-100">
-    <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-12 text-[#27a3df] border-b-4 border-[#27a3df] pb-4 inline-block mx-auto">
-        Uma Plataforma Robusta e Confiável
-      </h2>
-      
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        <!-- Disponibilidade -->
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
-          <div class="bg-[#27a3df] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-server text-2xl text-[#27a3df]"></i>
-          </div>
-          <div class="text-4xl font-black text-[#27a3df] mb-2">99%</div>
-          <p class="text-gray-700 text-sm leading-relaxed">
-            Seu sistema de suporte sempre online durante o horário comercial.
-          </p>
-        </div>
-        
-        <!-- Tempo de Resposta -->
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
-          <div class="bg-[#27a3df] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-bolt text-2xl text-[#27a3df]"></i>
-          </div>
-          <div class="text-4xl font-black text-[#27a3df] mb-2">&lt; 2s</div>
-          <p class="text-gray-700 text-sm leading-relaxed">
-            Interface ágil para que sua equipe não perca tempo.
-          </p>
-        </div>
-        
-        <!-- Capacidade -->
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
-          <div class="bg-[#27a3df] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-users text-2xl text-[#27a3df]"></i>
-          </div>
-          <div class="text-4xl font-black text-[#27a3df] mb-2">+100</div>
-          <p class="text-gray-700 text-sm leading-relaxed">
-            Suporta até 100 usuários simultâneos sem perda de performance.
-          </p>
-        </div>
-        
-        <!-- Segurança -->
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
-          <div class="bg-[#27a3df] bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-shield-alt text-2xl text-[#27a3df]"></i>
-          </div>
-          <div class="text-4xl font-black text-[#27a3df] mb-2">Backup</div>
-          <p class="text-gray-700 text-sm leading-relaxed">
-            Seus dados e históricos de chamados sempre seguros e com backup automático.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Planos -->
   <section id="planos" class="section py-12 bg-white">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center mb-8 text-[#27a3df]">
         Nossos Planos
       </h2>
       <div class="flex flex-col md:flex-row justify-center gap-8 px-4">
-        <div class="w-full md:w-1/3 bg-white rounded-xl shadow-2xl p-8 relative border-2 border-gray-200">
+        <div class="w-full md:w-1/3 bg-white rounded-xl shadow-2xl p-8 border-2 border-gray-200 transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2">
           
           <div class="text-center">
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Básico</h3>
@@ -368,12 +496,12 @@
             </li>
           </ul>
           
-          <button class="w-full bg-gray-200 text-gray-700 font-bold py-3 rounded-lg hover:bg-gray-300 transition-all duration-300 transform hover:scale-105 shadow-lg">
+          <button class="w-full bg-gray-200 text-gray-700 font-bold py-3 rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-300 active:scale-95">
             Escolher Plano Básico
           </button>
         </div>
 
-        <div class="w-full md:w-1/3 bg-white rounded-xl shadow-2xl p-8 relative border-2 border-[#27a3df]">
+        <div class="w-full md:w-1/3 bg-white rounded-xl shadow-2xl p-8 relative border-2 border-[#27a3df] transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2">
   
           <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
               <span class="bg-[#27a3df] text-white text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wider">Mais Popular</span>
@@ -405,12 +533,12 @@
             </li>
           </ul>
           
-          <button class="w-full bg-[#27a3df] text-white font-bold py-3 rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+          <button class="w-full bg-[#27a3df] text-white font-bold py-3 rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600 active:scale-95">
             Escolher Plano Premium
           </button>
         </div>
 
-        <div class="w-full md:w-1/3 bg-white rounded-xl shadow-2xl p-8 relative border-2 border-gray-200">
+        <div class="w-full md:w-1/3 bg-white rounded-xl shadow-2xl p-8 border-2 border-gray-200 transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2">
           
           <div class="text-center">
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Empresarial</h3>
@@ -438,7 +566,7 @@
             </li>
           </ul>
           
-          <button class="w-full bg-gray-200 text-gray-700 font-bold py-3 rounded-lg hover:bg-gray-300 transition-all duration-300 transform hover:scale-105 shadow-lg">
+          <button class="w-full bg-gray-200 text-gray-700 font-bold py-3 rounded-lg transition-all duration-300 ease-in-out hover:bg-gray-300 active:scale-95">
             Escolher Plano Empresarial
           </button>
         </div>
@@ -446,149 +574,138 @@
     </div>
   </section>
   
-  <!-- Diferenciais do Sistema -->
   <section class="section py-16 bg-gradient-to-br from-blue-50 to-indigo-50">
     <div class="container mx-auto px-4">
       <h2 class="text-4xl font-bold text-center mb-4 text-[#27a3df]">
         Nosso Sistema Integrado
       </h2>
-      <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      <p class="text-xl text-gray-600 text-center mb-2 max-w-3xl mx-auto">
         Três soluções poderosas que se conectam para transformar sua gestão empresarial
       </p>
+      <p class="text-lg text-gray-500 text-center mb-12 max-w-3xl mx-auto">
+        Veja na prática como cada módulo do nosso ecossistema funciona para simplificar o seu dia a dia.
+      </p>
       
-      <!-- Gráfico de Integração -->
-      <div class="flex justify-center items-center mb-12">
-        <div class="flex items-center space-x-4">
-          <div class="bg-white p-4 rounded-full shadow-lg">
-            <i class="fas fa-ticket-alt text-2xl text-[#27a3df]"></i>
-          </div>
-          <div class="w-16 h-1 bg-[#27a3df] rounded-full"></div>
-          <div class="bg-white p-4 rounded-full shadow-lg">
-            <i class="fas fa-file-invoice-dollar text-2xl text-[#27a3df]"></i>
-          </div>
-          <div class="w-16 h-1 bg-[#27a3df] rounded-full"></div>
-          <div class="bg-white p-4 rounded-full shadow-lg">
-            <i class="fas fa-user-clock text-2xl text-[#27a3df]"></i>
-          </div>
-        </div>
-      </div>
+      <div class="flex justify-center items-center mb-16 h-20">
+        <svg width="400" height="80" viewBox="0 0 400 80" class="overflow-visible">
+            <defs>
+                <!-- Gradientes para as linhas -->
+                <linearGradient id="gradient-1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#60a5fa; stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#2563eb; stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="gradient-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#4ade80; stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#16a34a; stop-opacity:1" />
+                </linearGradient>
+            </defs>
+    
+            <!-- Linhas de conexão -->
+            <path id="line-1" class="line-path" d="M 70 40 H 170" stroke="url(#gradient-1)" />
+            <path id="line-2" class="line-path" d="M 230 40 H 330" stroke="url(#gradient-2)" />
+    
+            <!-- Ícone 1 - Gestão de Chamados -->
+            <g id="icon-1" class="icon-container">
+                <circle cx="40" cy="40" r="30" fill="white" stroke="#e5e7eb" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" />
+                <!-- Ícone de ticket SVG -->
+                <path d="M55 25 H35 C32 25 30 27 30 30 V35 C32 35 33 36 33 37.5 S32 40 30 40 V45 C30 48 32 50 35 50 H55 C58 50 60 48 60 45 V40 C58 40 57 39 57 37.5 S58 35 60 35 V30 C60 27 58 25 55 25 Z M50 30 V45 M40 30 V45" 
+                      fill="none" stroke="#27a3df" stroke-width="2" stroke-linecap="round"/>
+            </g>
+    
+            <!-- Ícone 2 - Folha de Pagamento -->
+            <g id="icon-2" class="icon-container">
+                <circle cx="200" cy="40" r="30" fill="white" stroke="#e5e7eb" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" />
+                <!-- Ícone de dinheiro SVG -->
+                <path d="M185 30 H215 V50 H185 Z M200 25 V55 M195 25 V55 M205 25 V55 M190 35 C190 32 192 30 195 30 M210 35 C210 32 208 30 205 30 M190 45 C190 48 192 50 195 50 M210 45 C210 48 208 50 205 50"
+                      fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+            </g>
+    
+            <!-- Ícone 3 - Controle de Ponto -->
+            <g id="icon-3" class="icon-container">
+                <circle cx="360" cy="40" r="30" fill="white" stroke="#e5e7eb" stroke-width="2" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" />
+                <!-- Ícone de relógio SVG -->
+                <circle cx="360" cy="40" r="12" fill="none" stroke="#7c3aed" stroke-width="2"/>
+                <path d="M360 32 V40 L365 45" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="360" cy="40" r="1.5" fill="#7c3aed"/>
+            </g>
+        </svg>
+    </div>
       
-      <div class="space-y-12">
-        <!-- Item 1: Ícone à esquerda -->
-        <div class="flex flex-col lg:flex-row items-center gap-8" data-aos="fade-right">
+      <div class="space-y-20">
+        
+        <div class="flex flex-col lg:flex-row items-center gap-12 group" data-aos="fade-right">
           <div class="lg:w-1/2 text-center lg:text-left">
-            <div class="bg-[#27a3df] bg-opacity-10 w-24 h-24 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6">
+            <div class="bg-blue-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6 transition-transform duration-300 group-hover:scale-110">
               <i class="fas fa-ticket-alt text-4xl text-[#27a3df]"></i>
             </div>
             <h3 class="text-3xl font-bold mb-4 text-[#27a3df]">Gestão Inteligente de Chamados</h3>
-            <p class="text-gray-700 text-lg leading-relaxed">
-              Nossa IA analisa e prioriza automaticamente os chamados, oferecendo soluções imediatas para 60% dos problemas. 
-              Acompanhamento em tempo real e relatórios detalhados garantem transparência total no atendimento.
-            </p>
+            <p class="text-gray-700 text-lg leading-relaxed">Nossa IA analisa e prioriza automaticamente os chamados, oferecendo soluções imediatas e relatórios detalhados para total transparência.</p>
             <ul class="mt-6 space-y-2">
-              <li class="flex items-center text-gray-600">
-                <i class="fas fa-check-circle text-[#27a3df] mr-3"></i>
-                Priorização automática por IA
-              </li>
-              <li class="flex items-center text-gray-600">
-                <i class="fas fa-check-circle text-[#27a3df] mr-3"></i>
-                Soluções imediatas para problemas comuns
-              </li>
-              <li class="flex items-center text-gray-600">
-                <i class="fas fa-check-circle text-[#27a3df] mr-3"></i>
-                Acompanhamento em tempo real
-              </li>
+              <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-[#27a3df] mr-3"></i>Priorização automática por IA</li>
+              <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-[#27a3df] mr-3"></i>Soluções imediatas para problemas comuns</li>
+              <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-[#27a3df] mr-3"></i>Acompanhamento em tempo real</li>
             </ul>
           </div>
           <div class="lg:w-1/2">
-            <div class="bg-white rounded-2xl shadow-xl p-8">
-              <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl p-6 text-center">
-                <i class="fas fa-robot text-6xl text-[#27a3df] mb-4"></i>
-                <h4 class="text-xl font-bold text-gray-800 mb-2">IA Inteligente</h4>
-                <p class="text-gray-600">Resolução automática de 60% dos chamados</p>
+            <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200/80">
+              <div class="bg-gray-200 px-4 py-2 flex items-center gap-2"><div class="w-3 h-3 bg-gray-300 rounded-full"></div><div class="w-3 h-3 bg-gray-300 rounded-full"></div><div class="w-3 h-3 bg-gray-300 rounded-full"></div></div>
+              <div class="p-4 bg-gray-50">
+                <img src="images/principal.jpg" alt="Ilustração do sistema de gestão de chamados" class="rounded-md w-full h-auto">
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Item 2: Ícone à direita -->
-        <div class="flex flex-col lg:flex-row-reverse items-center gap-8" data-aos="fade-left">
+        <div class="flex flex-col lg:flex-row-reverse items-center gap-12 group" data-aos="fade-left">
           <div class="lg:w-1/2 text-center lg:text-left">
-            <div class="bg-[#27a3df] bg-opacity-10 w-24 h-24 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6">
-              <i class="fas fa-file-invoice-dollar text-4xl text-[#27a3df]"></i>
+            <div class="bg-green-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6 transition-transform duration-300 group-hover:scale-110">
+              <i class="fas fa-file-invoice-dollar text-4xl text-green-600"></i>
             </div>
-            <h3 class="text-3xl font-bold mb-4 text-[#27a3df]">Folha de Pagamento Integrada</h3>
-            <p class="text-gray-700 text-lg leading-relaxed">
-              Cálculos automáticos de salários, benefícios e impostos com total precisão. 
-              Relatórios completos e integração direta com o controle de ponto eliminam erros e economizam tempo.
-            </p>
+            <h3 class="text-3xl font-bold mb-4 text-green-600">Folha de Pagamento Integrada</h3>
+            <p class="text-gray-700 text-lg leading-relaxed">Cálculos automáticos e precisos de salários, benefícios e impostos. A integração com o ponto elimina erros e economiza tempo.</p>
             <ul class="mt-6 space-y-2">
-              <li class="flex items-center text-gray-600">
-                <i class="fas fa-check-circle text-[#27a3df] mr-3"></i>
-                Cálculos automáticos e precisos
-              </li>
-              <li class="flex items-center text-gray-600">
-                <i class="fas fa-check-circle text-[#27a3df] mr-3"></i>
-                Integração com controle de ponto
-              </li>
-              <li class="flex items-center text-gray-600">
-                <i class="fas fa-check-circle text-[#27a3df] mr-3"></i>
-                Relatórios completos e detalhados
-              </li>
+              <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-green-600 mr-3"></i>Cálculos automáticos e precisos</li>
+              <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-green-600 mr-3"></i>Integração com controle de ponto</li>
+              <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-green-600 mr-3"></i>Relatórios completos e detalhados</li>
             </ul>
           </div>
           <div class="lg:w-1/2">
-            <div class="bg-white rounded-2xl shadow-xl p-8">
-              <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-xl p-6 text-center">
-                <i class="fas fa-calculator text-6xl text-[#27a3df] mb-4"></i>
-                <h4 class="text-xl font-bold text-gray-800 mb-2">Cálculo Automático</h4>
-                <p class="text-gray-600">100% de precisão nos cálculos</p>
+            <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200/80">
+              <div class="bg-gray-200 px-4 py-2 flex items-center gap-2"><div class="w-3 h-3 bg-gray-300 rounded-full"></div><div class="w-3 h-3 bg-gray-300 rounded-full"></div><div class="w-3 h-3 bg-gray-300 rounded-full"></div></div>
+              <div class="p-4 bg-gray-50">
+                <img src="images/principal.jpg" alt="Ilustração do sistema de folha de pagamento" class="rounded-md w-full h-auto">
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Item 3: Ícone à esquerda -->
-        <div class="flex flex-col lg:flex-row items-center gap-8" data-aos="fade-right">
+        <div class="flex flex-col lg:flex-row items-center gap-12 group" data-aos="fade-right">
           <div class="lg:w-1/2 text-center lg:text-left">
-            <div class="bg-[#27a3df] bg-opacity-10 w-24 h-24 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6">
-              <i class="fas fa-user-clock text-4xl text-[#27a3df]"></i>
+            <div class="bg-purple-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto lg:mx-0 mb-6 transition-transform duration-300 group-hover:scale-110">
+              <i class="fas fa-user-clock text-4xl text-purple-600"></i>
             </div>
-            <h3 class="text-3xl font-bold mb-4 text-[#27a3df]">Controle de Ponto Digital</h3>
-            <p class="text-gray-700 text-lg leading-relaxed">
-              Registro simplificado de entrada e saída com múltiplas opções de acesso. 
-              Cálculo automático de horas trabalhadas e integração perfeita com a folha de pagamento.
-            </p>
+            <h3 class="text-3xl font-bold mb-4 text-purple-600">Controle de Ponto Digital</h3>
+            <p class="text-gray-700 text-lg leading-relaxed">Registro simplificado com múltiplas opções de acesso. O cálculo automático de horas integra-se perfeitamente com a folha de pagamento.</p>
             <ul class="mt-6 space-y-2">
-              <li class="flex items-center text-gray-600">
-                <i class="fas fa-check-circle text-[#27a3df] mr-3"></i>
-                Registro simplificado e intuitivo
-              </li>
-              <li class="flex items-center text-gray-600">
-                <i class="fas fa-check-circle text-[#27a3df] mr-3"></i>
-                Cálculo automático de horas
-              </li>
-              <li class="flex items-center text-gray-600">
-                <i class="fas fa-check-circle text-[#27a3df] mr-3"></i>
-                Integração com folha de pagamento
-              </li>
+              <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-purple-600 mr-3"></i>Registro simplificado e intuitivo</li>
+              <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-purple-600 mr-3"></i>Cálculo automático de horas</li>
+              <li class="flex items-center text-gray-600"><i class="fas fa-check-circle text-purple-600 mr-3"></i>Integração com folha de pagamento</li>
             </ul>
           </div>
           <div class="lg:w-1/2">
-            <div class="bg-white rounded-2xl shadow-xl p-8">
-              <div class="bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl p-6 text-center">
-                <i class="fas fa-clock text-6xl text-[#27a3df] mb-4"></i>
-                <h4 class="text-xl font-bold text-gray-800 mb-2">Controle Total</h4>
-                <p class="text-gray-600">Gestão completa do tempo de trabalho</p>
+            <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200/80">
+              <div class="bg-gray-200 px-4 py-2 flex items-center gap-2"><div class="w-3 h-3 bg-gray-300 rounded-full"></div><div class="w-3 h-3 bg-gray-300 rounded-full"></div><div class="w-3 h-3 bg-gray-300 rounded-full"></div></div>
+              <div class="p-4 bg-gray-50">
+                <img src="images/principal.jpg" alt="Ilustração do sistema de controle de ponto" class="rounded-md w-full h-auto">
               </div>
             </div>
           </div>
         </div>
+        
       </div>
     </div>
   </section>
 
-  <!-- Indicadores e Estatísticas -->
   <section class="section py-16 bg-[#27a3df] text-white">
     <div class="container mx-auto px-4">
       <h2 class="text-4xl font-bold text-center mb-4">Números que Impressionam</h2>
@@ -710,12 +827,13 @@
     </div>
   </section>
 
-  <!-- Comparativo: A Evolução do Suporte -->
   <section id="evolucao-suporte" class="py-16 sm:py-24 bg-gradient-to-b from-gray-50 to-white">
     <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-4 text-[#27a3df] border-b-4 border-[#27a3df] pb-4 inline-block mx-auto" data-aos="fade-down">
-        A Evolução do Suporte de TI
-      </h2>
+      <div class="text-center">
+        <h2 class="text-4xl font-bold text-center mb-12 text-[#27a3df] border-b-4 border-[#27a3df] pb-4 inline-block" data-aos="fade-down">
+          A Evolução do Suporte de TI
+        </h2>
+      </div>
       <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
         Veja como transformamos o suporte tradicional em uma experiência inteligente e eficiente
       </p>
@@ -723,7 +841,7 @@
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto px-4">
 
-        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md border border-gray-200 comparacao-card evolucao-card" data-aos="fade-right" data-aos-delay="300">
+        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md border border-gray-200 comparacao-card evolucao-card transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2" data-aos="fade-right" data-aos-delay="300">
             <div class="text-center mb-8">
                 <h3 class="text-2xl font-bold text-gray-800">Métodos Tradicionais</h3>
                 <div class="w-12 h-1 bg-red-500 mx-auto mt-2"></div>
@@ -776,7 +894,7 @@
             </div>
         </div>
 
-        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg border-2 border-[#27a3df] comparacao-card evolucao-card solucao-destaque" data-aos="fade-left" data-aos-delay="400">
+        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg border-2 border-[#27a3df] comparacao-card evolucao-card solucao-destaque transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2" data-aos="fade-left" data-aos-delay="400">
             <div class="text-center mb-8">
                 <h3 class="text-2xl font-bold text-[#27a3df]">A Solução Techtools</h3>
                 <div class="w-12 h-1 bg-[#27a3df] mx-auto mt-2"></div>
@@ -927,7 +1045,70 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Seleciona os elementos do SVG
+        const icon1 = document.getElementById('icon-1');
+        const icon2 = document.getElementById('icon-2');
+        const icon3 = document.getElementById('icon-3');
+    
+        const line1 = document.getElementById('line-1');
+        const line2 = document.getElementById('line-2');
+    
+        // Array com todas as linhas para facilitar a configuração
+        const lines = [line1, line2];
+    
+        // Configuração inicial das linhas
+        lines.forEach(line => {
+            if (line) {
+                // 1. Calcula o comprimento exato da linha
+                const length = line.getTotalLength();
+    
+                // 2. Define o estilo inicial da linha para que ela fique "invisível"
+                line.style.strokeDasharray = length;
+                line.style.strokeDashoffset = length;
+    
+                // 3. Garante que a transição seja aplicada via JS para evitar conflitos
+                line.style.transition = 'stroke-dashoffset 0.8s ease-in-out';
+            }
+        });
+    
+        // Função para animar uma linha
+        const drawLine = (line) => {
+            if (line) line.style.strokeDashoffset = '0';
+        };
+    
+        // Função para "desfazer" a animação de uma linha
+        const eraseLine = (line) => {
+            if (line) {
+                const length = line.getTotalLength();
+                line.style.strokeDashoffset = length;
+            }
+        };
+    
+        // Adiciona os gatilhos para cada ícone
+        if (icon1) {
+            icon1.addEventListener('mouseenter', () => drawLine(line1));
+            icon1.addEventListener('mouseleave', () => eraseLine(line1));
+        }
+    
+        if (icon2) {
+            icon2.addEventListener('mouseenter', () => {
+                drawLine(line1);
+                drawLine(line2);
+            });
+            icon2.addEventListener('mouseleave', () => {
+                eraseLine(line1);
+                eraseLine(line2);
+            });
+        }
+    
+        if (icon3) {
+            icon3.addEventListener('mouseenter', () => drawLine(line2));
+            icon3.addEventListener('mouseleave', () => eraseLine(line2));
+        }
+    });
+    </script>
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="js/animations.js"></script>

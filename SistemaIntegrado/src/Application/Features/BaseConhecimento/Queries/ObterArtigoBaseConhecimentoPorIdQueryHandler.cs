@@ -16,13 +16,13 @@ namespace SistemaIntegrado.Application.Features.BaseConhecimento.Queries
 
         public async Task<ArtigoBaseConhecimentoViewModel?> Handle(ObterArtigoBaseConhecimentoPorIdQuery request, CancellationToken cancellationToken)
         {
-            var artigo = await _artigoRepository.ObterPorId(request.Id);
+            var artigo = await _artigoRepository.ObterPorId(request.Id, request.EmpresaId);
             
             if (artigo == null)
                 return null;
 
             // Incrementa visualizações
-            await _artigoRepository.IncrementarVisualizacao(request.Id);
+            await _artigoRepository.IncrementarVisualizacao(request.Id, request.EmpresaId);
 
             return new ArtigoBaseConhecimentoViewModel
             {

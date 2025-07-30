@@ -14,7 +14,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.ConfirmarSoluc
 
         public async Task Handle(ConfirmarSolucaoCommand request, CancellationToken cancellationToken)
         {
-            var chamado = await _chamadoRepository.ObterPorId(request.ChamadoId);
+          var chamado = await _chamadoRepository.ObterPorId(request.ChamadoId, request.EmpresaId); 
             if (chamado == null)
             {
                 throw new Exception("Chamado não encontrado.");

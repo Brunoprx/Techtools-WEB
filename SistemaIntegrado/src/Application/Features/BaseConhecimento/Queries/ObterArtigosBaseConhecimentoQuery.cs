@@ -8,5 +8,6 @@ namespace SistemaIntegrado.Application.Features.BaseConhecimento.Queries
         public string? PalavraChave { get; set; }
         public string? Categoria { get; set; }
         public string? Tags { get; set; }
+        public int EmpresaId { get; set; }
     }
 } 

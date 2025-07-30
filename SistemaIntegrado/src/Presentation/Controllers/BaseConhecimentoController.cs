@@ -40,7 +40,8 @@ namespace SistemaIntegrado.Api.Controllers
             {
                 PalavraChave = palavraChave,
                 Categoria = categoria,
-                Tags = tags
+                Tags = tags,
+                EmpresaId = GetEmpresaIdFromToken()
             };
 
             var artigos = await _mediator.Send(query);
@@ -50,7 +51,7 @@ namespace SistemaIntegrado.Api.Controllers
         [HttpGet("artigos/{id}")]
         public async Task<IActionResult> ObterArtigoPorId(int id)
         {
-            var query = new ObterArtigoBaseConhecimentoPorIdQuery { Id = id };
+            var query = new ObterArtigoBaseConhecimentoPorIdQuery { Id = id, EmpresaId = GetEmpresaIdFromToken() };
             var artigo = await _mediator.Send(query);
             
             if (artigo == null)
@@ -80,7 +81,7 @@ namespace SistemaIntegrado.Api.Controllers
             {
                 command.Id = id;
                 command.AutorId = GetUserIdFromToken(); // Adicionar ID do usuário para validação
-                
+                command.EmpresaId = GetEmpresaIdFromToken();
                 var resultado = await _mediator.Send(command);
                 
                 if (!resultado)
@@ -106,7 +107,8 @@ namespace SistemaIntegrado.Api.Controllers
                 var command = new RemoverArtigoBaseConhecimentoCommand 
                 { 
                     Id = id,
-                    AutorId = GetUserIdFromToken() // Adicionar ID do usuário para validação
+                    AutorId = GetUserIdFromToken(), // Adicionar ID do usuário para validação
+                    EmpresaId = GetEmpresaIdFromToken()
                 };
                 var resultado = await _mediator.Send(command);
                 

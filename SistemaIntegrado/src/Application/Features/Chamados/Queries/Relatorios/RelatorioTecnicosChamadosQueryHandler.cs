@@ -20,10 +20,10 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
             if (request.TecnicoId.HasValue)
             {
                 // Retorna apenas o técnico solicitado
-                return await _chamadoRepository.ObterRelatorioChamadosPorTecnico(request.TecnicoId.Value);
+                return await _chamadoRepository.ObterRelatorioChamadosPorTecnico(request.TecnicoId.Value, request.EmpresaId);
             }
             // Retorna todos
-            return await _chamadoRepository.ObterRelatorioChamadosPorTecnico();
+            return await _chamadoRepository.ObterRelatorioChamadosPorTecnico(request.EmpresaId);
         }
     }
 } 

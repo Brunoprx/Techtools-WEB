@@ -7,5 +7,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.RejeitarSoluca
         public int ChamadoId { get; set; }
         public int ColaboradorId { get; set; }
         public string MotivoRejeicao { get; set; } = string.Empty;
+
+        public int EmpresaId { get; set; }
     }
 }

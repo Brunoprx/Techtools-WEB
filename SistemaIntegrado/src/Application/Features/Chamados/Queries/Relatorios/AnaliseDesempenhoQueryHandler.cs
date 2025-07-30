@@ -1,6 +1,7 @@
 using MediatR;
 using SistemaIntegrado.Application.Interfaces.Repositories;
 using SistemaIntegrado.Application.Features.Chamados.ViewModels;
+using SistemaIntegrado.Domain.Entities;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,23 +20,25 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
 
         public async Task<AnaliseDesempenhoViewModel> Handle(AnaliseDesempenhoQuery request, CancellationToken cancellationToken)
         {
-            var chamados = await _chamadoRepository.ObterTodos();
+            var chamados = await _chamadoRepository.ObterTodos(request.EmpresaId);
+            if (chamados == null) chamados = new List<Chamado>();
+            
             // Filtro por colaborador ou técnico
             if (request.ColaboradorId.HasValue)
                 chamados = chamados.Where(c => c.ColaboradorId == request.ColaboradorId.Value).ToList();
             if (request.TecnicoId.HasValue)
                 chamados = chamados.Where(c => c.TecnicoResponsavelId == request.TecnicoId.Value).ToList();
-            var total = chamados.Count;
-            // Percentual por tipo
-            var porTipo = chamados
+            var total = chamados.Count();
+            
+            // Percentual por categoria
+            var porCategoria = total > 0 ? chamados
                 .GroupBy(c => c.Categoria ?? "Outros")
-                .Select(g => new ChamadosPorTipoViewModel
+                .Select(g => new ChamadosPorCategoriaViewModel
                 {
-                    Tipo = g.Key,
-                    Percentual = total > 0 ? Math.Round(100.0 * g.Count() / total, 1) : 0
+                    Categoria = g.Key,
+                    Percentual = Math.Round((double)g.Count() / total * 100, 1)
                 })
-                .OrderByDescending(x => x.Percentual)
-                .ToList();
+                .ToList() : new List<ChamadosPorCategoriaViewModel>();
             // Padrões de problemas (variação dos últimos 30 dias vs 30 dias anteriores)
             var hoje = DateTime.Now;
             var ultimos30 = chamados.Where(c => c.DataAbertura.HasValue && c.DataAbertura.Value >= hoje.AddDays(-30)).ToList();
@@ -55,7 +58,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
             }
             return new AnaliseDesempenhoViewModel
             {
-                ChamadosPorTipo = porTipo,
+                ChamadosPorCategoria = porCategoria,
                 PadroesProblemas = padroes
             };
         }

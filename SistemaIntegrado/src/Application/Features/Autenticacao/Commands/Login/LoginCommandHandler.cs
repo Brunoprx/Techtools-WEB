@@ -27,12 +27,10 @@ namespace SistemaIntegrado.Application.Features.Autenticacao.Commands.Login
         {
             var colaborador = await _colaboradorRepository.ObterPorEmail(request.Email);
 
-            // ATENÇÃO: Verificação de senha simples APENAS PARA DESENVOLVIMENTO.
             if (colaborador == null || colaborador.Senha != request.Senha)
             {
                 throw new Exception("E-mail ou senha inválidos.");
             }
-
             return GerarTokenJwt(colaborador);
         }
 
@@ -48,7 +46,7 @@ namespace SistemaIntegrado.Application.Features.Autenticacao.Commands.Login
                 new Claim(JwtRegisteredClaimNames.Email, colaborador.EmailCorporativo),
                 new Claim(ClaimTypes.Name, colaborador.Nome),
                 new Claim(ClaimTypes.Role, colaborador.PerfilAcesso),
-                new Claim("empresa_id", colaborador.EmpresaId.ToString())
+                new Claim("EmpresaId", colaborador.EmpresaId.ToString())
             };
 
             var token = new JwtSecurityToken(

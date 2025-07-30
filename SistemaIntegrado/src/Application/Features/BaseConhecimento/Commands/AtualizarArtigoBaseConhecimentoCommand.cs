@@ -10,5 +10,6 @@ namespace SistemaIntegrado.Application.Features.BaseConhecimento.Commands
         public string Categoria { get; set; } = string.Empty;
         public string? Tags { get; set; }
         public int? AutorId { get; set; } // Para validação de autorização
+        public int EmpresaId { get; set; }
     }
 } 

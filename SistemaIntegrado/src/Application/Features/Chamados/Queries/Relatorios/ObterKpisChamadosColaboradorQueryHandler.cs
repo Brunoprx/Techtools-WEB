@@ -17,15 +17,15 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
 
         public async Task<KpisChamadosColaboradorViewModel> Handle(ObterKpisChamadosColaboradorQuery request, CancellationToken cancellationToken)
         {
-            var chamados = await _chamadoRepository.ObterTodos();
+            var chamados = await _chamadoRepository.ObterTodos(request.EmpresaId);
             var meusChamados = chamados.Where(c => c.ColaboradorId == request.ColaboradorId).ToList();
 
             return new KpisChamadosColaboradorViewModel
             {
-                TotalChamados = meusChamados.Count,
-                EmAndamento = meusChamados.Count(c => c.Status.ToString() == "EmAndamento"),
-                Finalizados = meusChamados.Count(c => c.Status.ToString() == "Fechado"),
-                Cancelados = meusChamados.Count(c => c.Status.ToString() == "Cancelado")
+                TotalChamados = meusChamados?.Count() ?? 0,
+                EmAndamento = meusChamados?.Count(c => c.Status.ToString() == "EmAndamento") ?? 0,
+                Finalizados = meusChamados?.Count(c => c.Status.ToString() == "Fechado") ?? 0,
+                Cancelados = meusChamados?.Count(c => c.Status.ToString() == "Cancelado") ?? 0
             };
         }
     }

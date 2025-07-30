@@ -32,12 +32,12 @@ namespace SistemaIntegrado.Application.Features.Usuarios.Commands
                 throw new ArgumentException("CPF é obrigatório.");
 
             // Verificar se email já existe
-            var usuarioExistente = await _colaboradorRepository.ObterPorEmail(request.Email);
+            var usuarioExistente = await _colaboradorRepository.ObterPorEmail(request.Email, request.EmpresaId);
             if (usuarioExistente != null)
                 throw new InvalidOperationException("Email já está em uso.");
 
             // Definir perfil automaticamente se não fornecido
-            string perfilAcesso;
+            string perfilAcesso = string.Empty;
             if (!string.IsNullOrWhiteSpace(request.PerfilAcesso))
             {
                 // Validar perfil fornecido
@@ -49,7 +49,7 @@ namespace SistemaIntegrado.Application.Features.Usuarios.Commands
             else
             {
                 // Definir perfil automaticamente baseado em cargo e setor
-                perfilAcesso = _perfilAcessoService.DefinirPerfilAutomaticamente(request.Cargo, request.Setor);
+                perfilAcesso = _perfilAcessoService.DefinirPerfilAutomaticamente(request.Cargo ?? string.Empty, request.Setor ?? string.Empty);
             }
 
             // Criar o colaborador
@@ -63,8 +63,12 @@ namespace SistemaIntegrado.Application.Features.Usuarios.Commands
                 Setor = request.Setor,
                 Banco = request.Banco,
                 TipoContrato = request.TipoContrato,
-                PerfilAcesso = perfilAcesso
+                PerfilAcesso = perfilAcesso,
+                EmpresaId = request.EmpresaId
             };
+
+            // LOG para depuração do valor de EmpresaId recebido
+            Console.WriteLine($"EmpresaId recebido: {request.EmpresaId} (tipo: {request.EmpresaId.GetType()})");
 
             // Salvar no repositório
             await _colaboradorRepository.Adicionar(colaborador);

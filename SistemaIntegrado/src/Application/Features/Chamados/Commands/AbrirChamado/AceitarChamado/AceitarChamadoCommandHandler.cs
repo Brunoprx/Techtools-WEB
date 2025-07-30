@@ -16,7 +16,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.AceitarChamado
 
         public async Task Handle(AceitarChamadoCommand request, CancellationToken cancellationToken)
         {
-            var chamado = await _chamadoRepository.ObterPorId(request.ChamadoId);
+            var chamado = await _chamadoRepository.ObterPorId(request.ChamadoId, request.EmpresaId);
 
             if (chamado == null)
             {

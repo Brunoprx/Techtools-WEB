@@ -6,5 +6,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.ConfirmarSoluc
     {
         public int ChamadoId { get; set; }
         public int ColaboradorId { get; set; } // ID do colaborador que está aceitando a solução
+
+        public int EmpresaId { get; set; }
     }
 }

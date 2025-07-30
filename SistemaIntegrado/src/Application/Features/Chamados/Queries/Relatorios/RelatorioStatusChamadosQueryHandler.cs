@@ -17,7 +17,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
 
         public async Task<Dictionary<string, int>> Handle(RelatorioStatusChamadosQuery request, CancellationToken cancellationToken)
         {
-            var todos = await _chamadoRepository.ObterTodos();
+            var todos = await _chamadoRepository.ObterTodos(request.EmpresaId);
             return todos
                 .GroupBy(c => c.Status.ToString())
                 .ToDictionary(g => g.Key, g => g.Count());

@@ -4,13 +4,13 @@ namespace SistemaIntegrado.Application.Features.Chamados.ViewModels
 {
     public class AnaliseDesempenhoViewModel
     {
-        public List<ChamadosPorTipoViewModel> ChamadosPorTipo { get; set; } = new();
+        public List<ChamadosPorCategoriaViewModel> ChamadosPorCategoria { get; set; } = new();
         public List<PadraoProblemaViewModel> PadroesProblemas { get; set; } = new();
     }
 
-    public class ChamadosPorTipoViewModel
+    public class ChamadosPorCategoriaViewModel
     {
-        public string Tipo { get; set; } = string.Empty;
+        public string Categoria { get; set; } = string.Empty;
         public double Percentual { get; set; }
     }
 

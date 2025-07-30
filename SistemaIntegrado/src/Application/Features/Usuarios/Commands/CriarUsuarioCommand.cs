@@ -13,5 +13,6 @@ namespace SistemaIntegrado.Application.Features.Usuarios.Commands
         public string? Banco { get; set; }
         public string? TipoContrato { get; set; }
         public string? PerfilAcesso { get; set; } // Opcional - será definido automaticamente se não fornecido
+        public int EmpresaId { get; set; }
     }
 } 

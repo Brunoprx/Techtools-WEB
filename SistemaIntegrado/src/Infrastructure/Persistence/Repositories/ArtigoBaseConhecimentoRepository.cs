@@ -14,48 +14,49 @@ namespace SistemaIntegrado.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<ArtigoBaseConhecimento?> ObterPorId(int id)
+        public async Task<ArtigoBaseConhecimento?> ObterPorId(int id, int empresaId)
         {
-            return await _context.ArtigosBaseConhecimento.FindAsync(id);
+            return await _context.ArtigosBaseConhecimento.FirstOrDefaultAsync(a => a.Id == id && a.EmpresaId == empresaId);
         }
 
-        public async Task<IEnumerable<ArtigoBaseConhecimento>> ObterTodos()
+        public async Task<IEnumerable<ArtigoBaseConhecimento>> ObterTodos(int empresaId)
         {
             return await _context.ArtigosBaseConhecimento
+                .Where(a => a.EmpresaId == empresaId)
                 .OrderByDescending(a => a.DataCriacao)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ArtigoBaseConhecimento>> BuscarPorTitulo(string titulo)
+        public async Task<IEnumerable<ArtigoBaseConhecimento>> BuscarPorTitulo(string titulo, int empresaId)
         {
             return await _context.ArtigosBaseConhecimento
-                .Where(a => a.Titulo.Contains(titulo, StringComparison.OrdinalIgnoreCase))
+                .Where(a => a.EmpresaId == empresaId && a.Titulo.Contains(titulo, StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(a => a.DataCriacao)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ArtigoBaseConhecimento>> BuscarPorCategoria(string categoria)
+        public async Task<IEnumerable<ArtigoBaseConhecimento>> BuscarPorCategoria(string categoria, int empresaId)
         {
             return await _context.ArtigosBaseConhecimento
-                .Where(a => a.Categoria.Equals(categoria, StringComparison.OrdinalIgnoreCase))
+                .Where(a => a.EmpresaId == empresaId && a.Categoria.Equals(categoria, StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(a => a.DataCriacao)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ArtigoBaseConhecimento>> BuscarPorTags(string tags)
+        public async Task<IEnumerable<ArtigoBaseConhecimento>> BuscarPorTags(string tags, int empresaId)
         {
             return await _context.ArtigosBaseConhecimento
-                .Where(a => a.Tags != null && a.Tags.Contains(tags, StringComparison.OrdinalIgnoreCase))
+                .Where(a => a.EmpresaId == empresaId && a.Tags != null && a.Tags.Contains(tags, StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(a => a.DataCriacao)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ArtigoBaseConhecimento>> BuscarPorPalavraChave(string palavraChave)
+        public async Task<IEnumerable<ArtigoBaseConhecimento>> BuscarPorPalavraChave(string palavraChave, int empresaId)
         {
             return await _context.ArtigosBaseConhecimento
-                .Where(a => a.Titulo.Contains(palavraChave, StringComparison.OrdinalIgnoreCase) ||
+                .Where(a => a.EmpresaId == empresaId && (a.Titulo.Contains(palavraChave, StringComparison.OrdinalIgnoreCase) ||
                            a.Conteudo.Contains(palavraChave, StringComparison.OrdinalIgnoreCase) ||
-                           (a.Tags != null && a.Tags.Contains(palavraChave, StringComparison.OrdinalIgnoreCase)))
+                           (a.Tags != null && a.Tags.Contains(palavraChave, StringComparison.OrdinalIgnoreCase))))
                 .OrderByDescending(a => a.DataCriacao)
                 .ToListAsync();
         }
@@ -71,18 +72,18 @@ namespace SistemaIntegrado.Infrastructure.Persistence.Repositories
             _context.ArtigosBaseConhecimento.Update(artigo);
         }
 
-        public async Task Remover(int id)
+        public async Task Remover(int id, int empresaId)
         {
-            var artigo = await ObterPorId(id);
+            var artigo = await ObterPorId(id, empresaId);
             if (artigo != null)
             {
                 _context.ArtigosBaseConhecimento.Remove(artigo);
             }
         }
 
-        public async Task IncrementarVisualizacao(int id)
+        public async Task IncrementarVisualizacao(int id, int empresaId)
         {
-            var artigo = await ObterPorId(id);
+            var artigo = await ObterPorId(id, empresaId);
             if (artigo != null)
             {
                 artigo.Visualizacoes++;

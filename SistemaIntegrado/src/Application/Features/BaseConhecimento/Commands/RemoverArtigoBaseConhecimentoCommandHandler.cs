@@ -14,7 +14,7 @@ namespace SistemaIntegrado.Application.Features.BaseConhecimento.Commands
 
         public async Task<bool> Handle(RemoverArtigoBaseConhecimentoCommand request, CancellationToken cancellationToken)
         {
-            var artigo = await _artigoRepository.ObterPorId(request.Id);
+            var artigo = await _artigoRepository.ObterPorId(request.Id, request.EmpresaId);
             
             if (artigo == null)
                 return false;
@@ -25,7 +25,7 @@ namespace SistemaIntegrado.Application.Features.BaseConhecimento.Commands
                 throw new UnauthorizedAccessException("Você não tem permissão para excluir este artigo.");
             }
 
-            await _artigoRepository.Remover(request.Id);
+            await _artigoRepository.Remover(request.Id, request.EmpresaId);
             await _artigoRepository.SalvarAlteracoes();
 
             return true;

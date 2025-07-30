@@ -1,7 +1,9 @@
 using MediatR;
 using SistemaIntegrado.Application.Interfaces.Repositories;
 using SistemaIntegrado.Application.Features.Chamados.ViewModels;
+using SistemaIntegrado.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,16 +27,16 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
                 chamados = chamados.Where(c => c.TecnicoResponsavelId == request.TecnicoId.Value).ToList();
 
             if (request.DataInicio.HasValue)
-                chamados = chamados.Where(c => (c.DataAbertura ?? DateTime.MinValue) >= request.DataInicio.Value).ToList();
+                chamados = chamados.Where(c => c.DataAbertura.HasValue && c.DataAbertura.Value >= request.DataInicio.Value).ToList();
 
             if (request.DataFim.HasValue)
-                chamados = chamados.Where(c => (c.DataAbertura ?? DateTime.MinValue) <= request.DataFim.Value).ToList();
+                chamados = chamados.Where(c => c.DataAbertura.HasValue && c.DataAbertura.Value <= request.DataFim.Value).ToList();
 
-            var total = chamados.Count;
+            var total = chamados.Count();
             var fechados = chamados.Where(c => c.Status.ToString() == "Fechado").ToList();
 
             // Tempo médio de resolução (em horas)
-            double tempoMedio = fechados.Count > 0
+            double tempoMedio = fechados.Count() > 0
                 ? fechados
                     .Where(c => c.DataAbertura.HasValue && c.DataFechamento.HasValue)
                     .Select(c => (c.DataFechamento.Value - c.DataAbertura.Value).TotalHours)
@@ -43,10 +45,10 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
                 : 0;
 
             // SLA: % de chamados fechados dentro do prazo (DataFechamento <= DataAbertura + 48h)
-            double sla = fechados.Count > 0
+            double sla = fechados.Count() > 0
                 ? 100.0 * fechados.Count(c =>
                     c.DataAbertura.HasValue && c.DataFechamento.HasValue &&
-                    c.DataFechamento.Value <= c.DataAbertura.Value.AddHours(48)
+                    c.DataFechamento!.Value <= c.DataAbertura!.Value.AddHours(48)
                 ) / fechados.Count
                 : 0;
 

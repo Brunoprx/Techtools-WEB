@@ -154,7 +154,8 @@ namespace SistemaIntegrado.Api.Controllers
         [HttpPut("{id}/reencaminhar")]
         public async Task<IActionResult> ReencaminharChamado(int id, [FromBody] int novoTecnicoId)
         {
-            var command = new Application.Features.Chamados.Commands.ReencaminharChamado.ReencaminharChamadoCommand(id, novoTecnicoId);
+            var empresaId = GetEmpresaIdFromToken();
+            var command = new Application.Features.Chamados.Commands.ReencaminharChamado.ReencaminharChamadoCommand(id, novoTecnicoId, empresaId);
             var resultado = await _mediator.Send(command);
             if (resultado)
                 return NoContent();
@@ -165,7 +166,8 @@ namespace SistemaIntegrado.Api.Controllers
         [HttpPut("{id}/assumir")]
         public async Task<IActionResult> AssumirChamado(int id, [FromBody] int tecnicoId)
         {
-            var command = new SistemaIntegrado.Application.Features.Chamados.Commands.AssumirChamado.AssumirChamadoCommand(id, tecnicoId);
+            var empresaId = GetEmpresaIdFromToken();
+            var command = new SistemaIntegrado.Application.Features.Chamados.Commands.AssumirChamado.AssumirChamadoCommand(id, tecnicoId, empresaId);
             var resultado = await _mediator.Send(command);
             if (resultado)
                 return NoContent();

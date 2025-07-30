@@ -32,7 +32,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.AbrirChamado
             }
 
             // Validação de duplicidade: mesmo colaborador, mesma descrição, em menos de 5 minutos
-            var chamadosRecentes = await _chamadoRepository.ObterPorColaboradorId(request.ColaboradorId, null, null);
+            var chamadosRecentes = await _chamadoRepository.ObterPorColaboradorId(request.ColaboradorId, null, null, request.EmpresaId);
             var agora = DateTime.Now;
             if (chamadosRecentes.Any(c =>
                 c.Descricao.Trim().Equals(request.Descricao.Trim(), StringComparison.OrdinalIgnoreCase) &&

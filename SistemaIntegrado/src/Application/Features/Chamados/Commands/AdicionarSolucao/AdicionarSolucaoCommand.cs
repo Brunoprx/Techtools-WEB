@@ -7,5 +7,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.AdicionarSoluc
         public int ChamadoId { get; set; }
         public int TecnicoId { get; set; }
         public string DescricaoSolucao { get; set; } = string.Empty;
+
+        public int EmpresaId { get; set; }
     }
 }
