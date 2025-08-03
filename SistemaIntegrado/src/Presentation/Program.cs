@@ -27,6 +27,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IChamadoRepository, ChamadoRepository>();
 builder.Services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
 builder.Services.AddScoped<IArtigoBaseConhecimentoRepository, ArtigoBaseConhecimentoRepository>();
+builder.Services.AddScoped<ITecnicoEspecialidadeRepository, TecnicoEspecialidadeRepository>();
 builder.Services.AddScoped<IPerfilAcessoService, PerfilAcessoService>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("SistemaIntegrado.Application")));

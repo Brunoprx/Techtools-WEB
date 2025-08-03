@@ -78,5 +78,29 @@ namespace SistemaIntegrado.Infrastructure.Persistence.Repositories
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task AtualizarEspecialidades(int tecnicoId, List<string> especialidades)
+        {
+            var especialidadesAntigas = await _context.TecnicoEspecialidades
+                .Where(te => te.IdUsuario == tecnicoId)
+                .ToListAsync();
+
+            if (especialidadesAntigas.Any())
+            {
+                _context.TecnicoEspecialidades.RemoveRange(especialidadesAntigas);
+            }
+
+            if (especialidades != null && especialidades.Any())
+            {
+                var novasEspecialidades = especialidades.Select(e => new TecnicoEspecialidade
+                {
+                    IdUsuario = tecnicoId,
+                    CategoriaEspecialidade = e
+                });
+                await _context.TecnicoEspecialidades.AddRangeAsync(novasEspecialidades);
+            }
+        }
     }
+
+    
 }

@@ -9,11 +9,13 @@ namespace SistemaIntegrado.Application.Features.Usuarios.Commands
     {
         private readonly IColaboradorRepository _colaboradorRepository;
         private readonly IPerfilAcessoService _perfilAcessoService;
+        private readonly ITecnicoEspecialidadeRepository _tecnicoEspecialidadeRepository;
 
-        public CriarUsuarioCommandHandler(IColaboradorRepository colaboradorRepository, IPerfilAcessoService perfilAcessoService)
+        public CriarUsuarioCommandHandler(IColaboradorRepository colaboradorRepository, IPerfilAcessoService perfilAcessoService, ITecnicoEspecialidadeRepository tecnicoEspecialidadeRepository)
         {
             _colaboradorRepository = colaboradorRepository;
             _perfilAcessoService = perfilAcessoService;
+            _tecnicoEspecialidadeRepository = tecnicoEspecialidadeRepository;
         }
 
         public async Task<int> Handle(CriarUsuarioCommand request, CancellationToken cancellationToken)
@@ -73,6 +75,12 @@ namespace SistemaIntegrado.Application.Features.Usuarios.Commands
             // Salvar no repositório
             await _colaboradorRepository.Adicionar(colaborador);
             await _colaboradorRepository.SalvarAlteracoes();
+
+            if (colaborador.PerfilAcesso == "Técnico" && request.Especialidades != null && request.Especialidades.Any())
+            {
+                await _colaboradorRepository.AtualizarEspecialidades(colaborador.Id, request.Especialidades);
+                await _colaboradorRepository.SalvarAlteracoes();
+            }
 
             return colaborador.Id;
         }

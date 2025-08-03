@@ -15,5 +15,6 @@ namespace SistemaIntegrado.Application.Interfaces.Repositories
         Task Atualizar(Colaborador colaborador);
         Task Remover(int id);
         Task SalvarAlteracoes();
+        Task AtualizarEspecialidades(int tecnicoId, List<string> especialidades);
     }
 }

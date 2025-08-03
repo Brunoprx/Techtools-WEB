@@ -39,7 +39,7 @@ namespace SistemaIntegrado.Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<Chamado>> ObterPorColaboradorId(int colaboradorId, string? status, string? tipo, int empresaId)
         {
-            var query = _context.Chamados.Where(c => c.ColaboradorId == colaboradorId && c.EmpresaId == empresaId);
+            var query = _context.Chamados.Include(c => c.Colaborador).Where(c => c.ColaboradorId == colaboradorId && c.EmpresaId == empresaId);
 
             if (!string.IsNullOrEmpty(status) && System.Enum.TryParse<Domain.Enums.StatusChamado>(status, true, out var statusEnum))
             {
@@ -97,7 +97,7 @@ namespace SistemaIntegrado.Infrastructure.Persistence.Repositories
         {
             var query = _context.Chamados
                 .Include(c => c.Colaborador)
-                .Where(c => c.EmpresaId == empresaId && c.Status == Domain.Enums.StatusChamado.Aberto && categorias.Contains(c.Categoria));
+                .Where(c => c.EmpresaId == empresaId && (c.Status == Domain.Enums.StatusChamado.Aberto || c.Status == Domain.Enums.StatusChamado.EmAndamento) && categorias.Contains(c.Categoria));
 
             return await query
                 .OrderByDescending(c => c.Prioridade == Domain.Enums.PrioridadeChamado.Critica)

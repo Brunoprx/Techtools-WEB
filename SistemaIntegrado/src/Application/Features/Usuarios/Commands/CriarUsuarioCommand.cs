@@ -1,4 +1,5 @@
 using MediatR;
+using System.Collections.Generic;
 
 namespace SistemaIntegrado.Application.Features.Usuarios.Commands
 {
@@ -14,5 +15,6 @@ namespace SistemaIntegrado.Application.Features.Usuarios.Commands
         public string? TipoContrato { get; set; }
         public string? PerfilAcesso { get; set; } // Opcional - será definido automaticamente se não fornecido
         public int EmpresaId { get; set; }
+        public List<string>? Especialidades { get; set; }
     }
 } 
