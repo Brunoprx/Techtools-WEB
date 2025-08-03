@@ -48,7 +48,7 @@ namespace SistemaIntegrado.Application.Features.Chamados.Queries.Relatorios
             double sla = fechados.Count() > 0
                 ? 100.0 * fechados.Count(c =>
                     c.DataAbertura.HasValue && c.DataFechamento.HasValue &&
-                    c.DataFechamento!.Value <= c.DataAbertura!.Value.AddHours(48)
+                    c.DataFechamento.Value <= c.DataAbertura.Value.AddHours(48)
                 ) / fechados.Count
                 : 0;
 

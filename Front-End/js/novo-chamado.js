@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Decodifica o token para pegar o ID do usuário logado
   const payloadToken = parseJwt(token);
   const colaboradorId = payloadToken ? parseInt(payloadToken.sub) : null;
+  
+  // Debug: Verificar se o EmpresaId está no token
+  console.log("Token payload:", payloadToken);
+  console.log("EmpresaId no token:", payloadToken?.EmpresaId);
 
   if (!colaboradorId) {
     alert('Não foi possível identificar o usuário. Por favor, faça login novamente.');
@@ -71,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const formData = new FormData();
                 formData.append('file', arquivo);
 
-                const uploadPromise = fetch(`http://localhost:5000/api/chamados/${novoChamadoId}/anexos`, {
+                const uploadPromise = fetch(`http://localhost:5000/api/chamados/${novoChamadoId}/anexos-abertura`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}` // <-- ENVIANDO O TOKEN TAMBÉM NO UPLOAD

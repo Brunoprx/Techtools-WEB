@@ -31,6 +31,10 @@ namespace SistemaIntegrado.Application.Features.Autenticacao.Commands.Login
             {
                 throw new Exception("E-mail ou senha inválidos.");
             }
+            
+            // Debug: Verificar se o EmpresaId está sendo obtido corretamente
+            Console.WriteLine($"Colaborador encontrado: {colaborador.Nome}, EmpresaId: {colaborador.EmpresaId}");
+            
             return GerarTokenJwt(colaborador);
         }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27/07/2025 às 17:14
+-- Tempo de geração: 03/08/2025 às 19:18
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -34,6 +34,18 @@ CREATE TABLE `anexo` (
   `caminho_arquivo` text DEFAULT NULL,
   `id_chamado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `anexo`
+--
+
+INSERT INTO `anexo` (`id_anexo`, `id_empresa`, `nome_arquivo`, `caminho_arquivo`, `id_chamado`) VALUES
+(2, 1, '1322308.jpeg', '/uploads/solucoes/d6b6dbd2-730b-4743-9232-5bd7d1accf9c.jpeg', 4),
+(3, 1, 'alebbb3ho4c51.webp', '/uploads/solucoes/6c53c5df-1766-4b08-b135-d68b7ca93780.webp', 5),
+(4, 1, 'avatar.jpg', '/uploads/solucoes/720b7c5e-b3bc-41c8-b464-9444d9f2864e.jpg', 5),
+(5, 1, 'Captura de tela 2025-04-26 194755.png', '/uploads/anexos/bf1be599-8f18-483d-96d0-4b536dc11141.png', 5),
+(6, 1, 'Captura de tela 2025-04-28 172211.png', '/uploads/anexos/c73f4e66-949d-4182-a544-9261be6ee09c.png', 7),
+(7, 1, 'Captura de tela 2025-05-02 190137.png', '/uploads/solucoes/47b4ad02-e5d6-4d6e-a1a6-ce0963dda535.png', 7);
 
 -- --------------------------------------------------------
 
@@ -79,6 +91,18 @@ CREATE TABLE `chamado` (
   `historico` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `chamado`
+--
+
+INSERT INTO `chamado` (`id_chamado`, `id_empresa`, `titulo`, `descricao`, `categoria`, `urgencia`, `prioridade`, `status`, `data_abertura`, `data_encerramento`, `solucao_sugerida`, `solucao_final`, `id_Usuario`, `id_tecnico`, `historico`) VALUES
+(2, 1, 'teste', 'teste', 'hardware', 'baixa', 'Baixa', 'Fechado', '2025-07-31 16:36:14', '2025-07-31 17:02:05', NULL, 'solução teste', 17, 19, '[31/07/2025 16:36] Prazo máximo de atendimento definido: 48 horas (Prioridade: Baixa).\n[31/07/2025 16:36] Chamado aberto por colaborador ID 17.\n[31/07/2025 17:01] Chamado aceito pelo técnico ID 19.\n[31/07/2025 17:01] Solução adicionada pelo técnico ID 19.\n[31/07/2025 17:02] Solução aceita pelo colaborador ID 17. Chamado fechado.'),
+(3, 1, 'teste img', 'img', 'hardware', 'baixa', 'Baixa', 'EmAndamento', '2025-07-31 17:06:35', NULL, NULL, NULL, 17, 19, '[31/07/2025 17:06] Prazo máximo de atendimento definido: 48 horas (Prioridade: Baixa).\n[31/07/2025 17:06] Chamado aberto por colaborador ID 17.\n[31/07/2025 17:06] Chamado atribuído automaticamente ao técnico ID 19.'),
+(4, 1, 'teste anexo imagem', 'img', 'hardware', 'baixa', 'Baixa', 'EmAndamento', '2025-07-31 17:13:52', NULL, NULL, NULL, 17, 19, '[31/07/2025 17:13] Prazo máximo de atendimento definido: 48 horas (Prioridade: Baixa).\n[31/07/2025 17:13] Chamado aberto por colaborador ID 17.\n[31/07/2025 17:13] Chamado atribuído automaticamente ao técnico ID 19.'),
+(5, 1, 't', 't', 'hardware', 'baixa', 'Baixa', 'PendenteAceite', '2025-08-01 12:54:44', NULL, NULL, 'solução img', 17, 19, '[01/08/2025 12:54] Prazo máximo de atendimento definido: 48 horas (Prioridade: Baixa).\n[01/08/2025 12:54] Chamado aberto por colaborador ID 17.\n[01/08/2025 12:54] Chamado atribuído automaticamente ao técnico ID 19.\n[01/08/2025 13:05] Chamado aceito pelo técnico ID 19.\n[01/08/2025 13:05] Solução adicionada pelo técnico ID 19.'),
+(6, 1, 't2', 't2', 'hardware', 'baixa', 'Baixa', 'EmAndamento', '2025-08-01 13:30:36', NULL, NULL, NULL, 17, 19, '[01/08/2025 13:30] Prazo máximo de atendimento definido: 48 horas (Prioridade: Baixa).\n[01/08/2025 13:30] Chamado aberto por colaborador ID 17.\n[01/08/2025 13:30] Chamado atribuído automaticamente ao técnico ID 19.'),
+(7, 1, 'vai', 'vad', 'hardware', 'baixa', 'Baixa', 'Fechado', '2025-08-01 14:04:09', '2025-08-01 14:06:14', NULL, 'vai', 17, 19, '[01/08/2025 14:04] Prazo máximo de atendimento definido: 48 horas (Prioridade: Baixa).\n[01/08/2025 14:04] Chamado aberto por colaborador ID 17.\n[01/08/2025 14:04] Chamado atribuído automaticamente ao técnico ID 19.\n[01/08/2025 14:04] Chamado aceito pelo técnico ID 19.\n[01/08/2025 14:05] Solução adicionada pelo técnico ID 19.\n[01/08/2025 14:06] Solução aceita pelo colaborador ID 17. Chamado fechado.');
+
 -- --------------------------------------------------------
 
 --
@@ -96,8 +120,8 @@ CREATE TABLE `empresas` (
 --
 
 INSERT INTO `empresas` (`id_empresa`, `nome_empresa`, `data_cadastro`) VALUES
-(1, 'Empresa A', '2025-07-21 19:44:59'),
-(2, 'Empresa B', '2025-07-21 19:44:59');
+(1, 'Empresa A', '2025-07-27 14:10:49'),
+(2, 'Empresa B', '2025-07-27 14:10:49');
 
 -- --------------------------------------------------------
 
@@ -164,6 +188,16 @@ CREATE TABLE `tecnico_especialidade` (
   `categoria_especialidade` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `tecnico_especialidade`
+--
+
+INSERT INTO `tecnico_especialidade` (`id_usuario`, `categoria_especialidade`) VALUES
+(19, 'Hardware'),
+(19, 'Rede'),
+(19, 'Sistema'),
+(19, 'Software');
+
 -- --------------------------------------------------------
 
 --
@@ -191,7 +225,9 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_Usuario`, `id_empresa`, `nome`, `email`, `senha`, `cpf`, `cargo`, `setor`, `banco`, `tipo_contrato`, `perfil_acesso`, `status`) VALUES
 (1, 1, 'Admin Empresa A', 'admin.a@empresa.com', '123456', '11111111111', 'Administrador', 'TI', 'Bradesco', 'CLT', 'Administrador', 'Ativo'),
-(2, 2, 'Admin Empresa B', 'admin.b@empresa.com', '123456', '22222222222', 'Administrador', 'TI', 'Itaú', 'CLT', 'Administrador', 'Ativo');
+(2, 2, 'Admin Empresa B', 'admin.b@empresa.com', '123456', '22222222222', 'Administrador', 'TI', 'Itaú', 'CLT', 'Administrador', 'Ativo'),
+(17, 1, 'Colaborador A', 'colaborador.a@empresa.com', '1234', '33333333333', 'Colaborador', 'TI', NULL, NULL, 'Colaborador', 'Ativo'),
+(19, 1, 'Técnico A', 'tecnico.a@empresa.com', '1234', '55555555555', 'Técnico', 'TI', NULL, NULL, 'Técnico', 'Ativo');
 
 --
 -- Índices para tabelas despejadas
@@ -277,7 +313,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `anexo`
 --
 ALTER TABLE `anexo`
-  MODIFY `id_anexo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_anexo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `artigos_base_conhecimento`
@@ -289,7 +325,7 @@ ALTER TABLE `artigos_base_conhecimento`
 -- AUTO_INCREMENT de tabela `chamado`
 --
 ALTER TABLE `chamado`
-  MODIFY `id_chamado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_chamado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `empresas`
@@ -319,7 +355,7 @@ ALTER TABLE `registroponto`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restrições para tabelas despejadas

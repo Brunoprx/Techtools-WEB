@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = 'login.html';
       return;
   }
+  
+  // Debug: Verificar se o EmpresaId está no token
+  const payload = parseJwt(token);
+  console.log("Token payload:", payload);
+  console.log("EmpresaId no token:", payload?.EmpresaId);
+  
   // Carrega a fila de chamados, enviando o token
   carregarFilaDeChamados(token);
   // Carrega a fila de especialidade
@@ -22,6 +28,10 @@ async function carregarFilaDeChamados(token) {
       console.error('Container com ID "fila-container" não foi encontrado no HTML.');
       return;
   }
+
+  // Debug: Log da URL e token
+  console.log("URL da API (fila):", apiUrl);
+  console.log("Token:", token ? "Presente" : "Ausente");
 
   container.innerHTML = '<p class="text-center text-gray-500 p-8">Buscando chamados na fila...</p>';
 
@@ -44,6 +54,11 @@ async function carregarFilaDeChamados(token) {
       }
 
       const chamados = await response.json();
+      
+      // Debug: Log da resposta da API
+      console.log("Resposta da API (fila):", chamados);
+      console.log("Quantidade de chamados na fila:", chamados.length);
+      
       container.innerHTML = ''; // Limpa a mensagem de "carregando"
 
       if (chamados.length === 0) {
@@ -86,6 +101,11 @@ async function carregarFilaEspecialidade(token) {
   const tecnicoId = payload ? payload.sub : null;
   const container = document.getElementById('fila-especialidade-container');
   if (!container || !tecnicoId) return;
+  
+  // Debug: Log dos parâmetros
+  console.log("TecnicoId:", tecnicoId);
+  console.log("URL da API (especialidade):", `http://localhost:5000/api/chamados/fila-especialidade?tecnicoId=${tecnicoId}`);
+  
   container.innerHTML = '<p class="text-gray-500">Carregando chamados...</p>';
   try {
     const response = await fetch(`http://localhost:5000/api/chamados/fila-especialidade?tecnicoId=${tecnicoId}`, {
@@ -93,6 +113,11 @@ async function carregarFilaEspecialidade(token) {
     });
     if (!response.ok) throw new Error('Erro ao buscar chamados da especialidade');
     const chamados = await response.json();
+    
+    // Debug: Log da resposta da API
+    console.log("Resposta da API (especialidade):", chamados);
+    console.log("Quantidade de chamados da especialidade:", chamados.length);
+    
     renderizarChamadosEspecialidade(chamados, container);
   } catch (error) {
     container.innerHTML = '<p class="text-red-500">Erro ao carregar chamados da especialidade.</p>';

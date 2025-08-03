@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     const colaboradorId = payload.sub;
+    
+    // Debug: Verificar se o EmpresaId está no token
+    console.log("Token payload:", payload);
+    console.log("ColaboradorId:", colaboradorId);
+    console.log("EmpresaId no token:", payload?.EmpresaId);
 
     // 3. Adiciona "ouvintes" aos filtros, passando o ID e o token para a função de recarga
     const filtroStatus = document.getElementById('filtro-status');
@@ -46,6 +51,11 @@ async function carregarMeusChamados(colaboradorId, token) {
     
     const apiUrl = `http://localhost:5000/api/chamados/colaborador/${colaboradorId}?${params.toString()}`;
     
+    // Debug: Log da URL e parâmetros
+    console.log("URL da API:", apiUrl);
+    console.log("ColaboradorId:", colaboradorId);
+    console.log("Token:", token ? "Presente" : "Ausente");
+    
     container.innerHTML = '<p class="text-center text-gray-500">Buscando seus chamados...</p>';
 
     try {
@@ -60,6 +70,10 @@ async function carregarMeusChamados(colaboradorId, token) {
         if (!response.ok) throw new Error('Falha na resposta da API');
 
         const chamados = await response.json();
+        
+        // Debug: Log da resposta da API
+        console.log("Resposta da API:", chamados);
+        console.log("Quantidade de chamados:", chamados.length);
         
         container.innerHTML = ''; 
 
@@ -109,7 +123,7 @@ async function carregarMeusChamados(colaboradorId, token) {
 
 // Função para preencher os cards de KPIs do colaborador
 async function preencherKpisChamados(colaboradorId, token) {
-    const url = `https://localhost:5001/api/chamados/kpis-colaborador?colaboradorId=${colaboradorId}`;
+    const url = `http://localhost:5000/api/chamados/kpis-colaborador?colaboradorId=${colaboradorId}`;
     try {
         const response = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
         if (!response.ok) throw new Error('Falha ao buscar KPIs');

@@ -17,6 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchDetalhesDoChamado(id, token) {
     const apiUrl = `http://localhost:5000/api/chamados/${id}`;
+    
+    // Debug: Log da URL e token
+    console.log("URL da API (detalhes):", apiUrl);
+    console.log("ChamadoId:", id);
+    console.log("Token:", token ? "Presente" : "Ausente");
+    
     try {
         const response = await fetch(apiUrl, { headers: { 'Authorization': `Bearer ${token}` } });
         if (response.status === 401) {
@@ -26,8 +32,11 @@ async function fetchDetalhesDoChamado(id, token) {
         if (!response.ok) throw new Error(`Chamado não encontrado (status: ${response.status})`);
         const data = await response.json();
         
+        // Debug: Log da resposta da API
         console.log("===== DADOS COMPLETOS RECEBIDOS DA API =====");
         console.log(data);
+        console.log("Anexos recebidos:", data.anexos);
+        console.log("Quantidade de anexos:", data.anexos?.length || 0);
         console.log("============================================");
 
         preencherPagina(data);
@@ -82,21 +91,51 @@ function preencherPagina(data) {
         }
     }
 
-    const anexosAberturaContainer = document.getElementById('anexos-abertura-container');
-    if (anexosAberturaContainer) {
-        anexosAberturaContainer.innerHTML = '';
-        if (data.anexos && data.anexos.length > 0) {
+        // Exibir anexos da abertura do chamado junto à descrição detalhada
+    const anexosContainer = document.getElementById('anexos-container');
+    if (anexosContainer && data.anexos && data.anexos.length > 0) {
+        // Limpar o container antes de adicionar novos anexos
+        anexosContainer.innerHTML = '';
+        
+        // Filtrar anexos que foram enviados na abertura (que estão na pasta /anexos/)
+        const anexosAbertura = data.anexos.filter(anexo => 
+            anexo.caminhoArquivo.includes('/anexos/')
+        );
+        
+        console.log("Separação de anexos:", {
+            total: data.anexos.length,
+            anexosAbertura: anexosAbertura.length,
+            anexosSolucao: data.anexos.filter(a => a.caminhoArquivo.includes('/solucoes/')).length,
+            detalhes: data.anexos.map(a => ({ nome: a.nomeArquivo, caminho: a.caminhoArquivo }))
+        });
+        
+        if (anexosAbertura.length > 0) {
             const tituloAnexos = document.createElement('h4');
-            tituloAnexos.className = 'text-sm font-medium text-gray-600 mb-2';
-            tituloAnexos.textContent = 'Anexos:';
-            anexosAberturaContainer.appendChild(tituloAnexos);
+            tituloAnexos.className = 'text-sm font-medium text-gray-600 mb-2 mt-4';
+            tituloAnexos.textContent = 'Anexos do Chamado:';
+            anexosContainer.appendChild(tituloAnexos);
+            
             const divImagens = document.createElement('div');
-            divImagens.className = 'grid grid-cols-2 sm:grid-cols-3 gap-4';
-            data.anexos.forEach(anexo => {
+            divImagens.className = 'grid grid-cols-2 sm:grid-cols-3 gap-3';
+            
+            anexosAbertura.forEach(anexo => {
                 const urlImagem = `http://localhost:5000${anexo.caminhoArquivo}`;
-                divImagens.innerHTML += `<a href="${urlImagem}" target="_blank" title="${anexo.nomeArquivo}"><img src="${urlImagem}" alt="${anexo.nomeArquivo}" class="inline-block h-24 w-24 object-cover rounded-lg border mr-2 mb-2"></a>`;
+                const anexoElement = document.createElement('div');
+                anexoElement.className = 'relative group';
+                anexoElement.innerHTML = `
+                    <a href="${urlImagem}" target="_blank" title="${anexo.nomeArquivo}" class="block">
+                        <img src="${urlImagem}" alt="${anexo.nomeArquivo}" 
+                             class="w-full h-24 object-cover rounded-lg border border-gray-200 hover:border-blue-300 transition-colors">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all rounded-lg flex items-center justify-center">
+                            <i class="fas fa-search-plus text-white opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                    </a>
+                    <p class="text-xs text-gray-500 mt-1 truncate" title="${anexo.nomeArquivo}">${anexo.nomeArquivo}</p>
+                `;
+                divImagens.appendChild(anexoElement);
             });
-            anexosAberturaContainer.appendChild(divImagens);
+            
+            anexosContainer.appendChild(divImagens);
         }
     }
 }
@@ -106,30 +145,145 @@ function controlarVisibilidadeAcoes(data) {
     const token = localStorage.getItem('jwt_token');
     const payload = parseJwt(token);
     if (!payload) return;
-    const perfilUsuarioLogado = payload.role;
-
+    
+    // Debug: Verificar todas as claims do token
+    console.log("Todas as claims do token:", payload);
+    
+    const perfilUsuarioLogado = payload.role || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    
     console.log(`--- Verificando Ações para Status: '${status}' e Perfil: '${perfilUsuarioLogado}' ---`);
 
-    document.getElementById('secao-aceitar')?.setAttribute('hidden', '');
-    document.getElementById('secao-solucao')?.setAttribute('hidden', '');
-    document.getElementById('secao-validacao-colaborador')?.setAttribute('hidden', '');
+    // Debug: Verificar se os elementos existem
+    const secaoAceitar = document.getElementById('secao-aceitar');
+    const secaoSolucao = document.getElementById('secao-solucao');
+    const secaoValidacaoColaborador = document.getElementById('secao-validacao-colaborador');
+    
+    console.log("Elementos encontrados:", {
+        secaoAceitar: !!secaoAceitar,
+        secaoSolucao: !!secaoSolucao,
+        secaoValidacaoColaborador: !!secaoValidacaoColaborador
+    });
 
+    // Esconder todas as seções primeiro
+    secaoAceitar?.setAttribute('hidden', '');
+    secaoSolucao?.setAttribute('hidden', '');
+    secaoValidacaoColaborador?.setAttribute('hidden', '');
+    
+    // Remover o display: none inline que está escondendo os elementos
+    secaoAceitar?.style.removeProperty('display');
+    secaoSolucao?.style.removeProperty('display');
+    secaoValidacaoColaborador?.style.removeProperty('display');
+
+    // Debug: Verificar comparações
+    console.log("Comparações:", {
+        perfilUsuarioLogado,
+        perfilEhTecnico: perfilUsuarioLogado === 'Técnico',
+        status,
+        statusExato: `"${status}"`,
+        statusEhAberto: status === 'Aberto',
+        statusEhEmAndamento: status === 'EmAndamento',
+        statusEhPendenteAceite: status === 'PendenteAceite'
+    });
+    
     if (perfilUsuarioLogado === 'Técnico') {
         if (status === 'Aberto') {
-            console.log("DECISÃO: Mostrar seção 'Aceitar'.");
-            document.getElementById('secao-aceitar')?.removeAttribute('hidden');
+            console.log("DECISÃO: Mostrar seção 'Aceitar' para técnico.");
+            secaoAceitar?.removeAttribute('hidden');
+            secaoAceitar?.style.removeProperty('display');
         } else if (status === 'EmAndamento') {
-            console.log("DECISÃO: Mostrar seção 'Solução'.");
-            document.getElementById('secao-solucao')?.removeAttribute('hidden');
+            console.log("DECISÃO: Mostrar seção 'Solução' para técnico.");
+            secaoSolucao?.removeAttribute('hidden');
+            secaoSolucao?.style.removeProperty('display');
+        } else if (status === 'PendenteAceite') {
+            console.log("DECISÃO: Técnico não deve ver botões de ação quando status é PendenteAceite.");
+            // Técnico não deve ver nenhuma ação quando o chamado está pendente de aceite
         }
-    }
-    
-    if (status === 'PendenteAceite') {
-        if(perfilUsuarioLogado !== 'Técnico') {
+                } else {
+        // Usuário não é técnico (é colaborador)
+        console.log("DECISÃO: Colaborador não deve ver botões de ação de técnico.");
+        // Garantir que o colaborador não veja botões de técnico
+        secaoAceitar?.setAttribute('hidden', '');
+        secaoSolucao?.setAttribute('hidden', '');
+        
+        // Remover também o CSS inline que pode estar sobrescrevendo
+        secaoAceitar?.style.setProperty('display', 'none', 'important');
+        secaoSolucao?.style.setProperty('display', 'none', 'important');
+        
+        // Debug: Verificar se as seções foram escondidas
+        console.log("Seções escondidas para colaborador:", {
+            secaoAceitarHidden: secaoAceitar?.hasAttribute('hidden'),
+            secaoSolucaoHidden: secaoSolucao?.hasAttribute('hidden'),
+            secaoAceitarDisplay: secaoAceitar?.style.display,
+            secaoSolucaoDisplay: secaoSolucao?.style.display
+        });
+        
+        if (status === 'PendenteAceite') {
             console.log("DECISÃO: Mostrar seção 'Validação do Colaborador'.");
-            document.getElementById('secao-validacao-colaborador')?.removeAttribute('hidden');
+            secaoValidacaoColaborador?.removeAttribute('hidden');
+            secaoValidacaoColaborador?.style.removeProperty('display');
+            
+            // Adicionar anexos à seção de validação do colaborador
+            adicionarAnexosASolucao(data.anexos);
+        } else {
+            // Para outros status, remover anexos da solução se existirem
+            const solucaoContainer = document.querySelector('#secao-validacao-colaborador .bg-blue-50');
+            if (solucaoContainer) {
+                const anexosExistentes = solucaoContainer.querySelectorAll('.anexos-solucao-section');
+                anexosExistentes.forEach(anexo => anexo.remove());
+            }
         }
     }
+}
+
+function adicionarAnexosASolucao(anexos) {
+    if (!anexos || anexos.length === 0) return;
+    
+    const solucaoContainer = document.querySelector('#secao-validacao-colaborador .bg-blue-50');
+    if (!solucaoContainer) return;
+    
+    // Remover seções de anexos existentes antes de adicionar novos
+    const anexosExistentes = solucaoContainer.querySelectorAll('.anexos-solucao-section');
+    console.log(`Removendo ${anexosExistentes.length} seções de anexos existentes`);
+    anexosExistentes.forEach(anexo => anexo.remove());
+    
+    // Filtrar apenas anexos da solução (que estão na pasta /solucoes/)
+    const anexosSolucao = anexos.filter(anexo => anexo.caminhoArquivo.includes('/solucoes/'));
+    
+    console.log("Anexos da solução encontrados:", anexosSolucao.length);
+    
+    if (anexosSolucao.length === 0) return;
+    
+    // Criar seção de anexos
+    const anexosSection = document.createElement('div');
+    anexosSection.className = 'mt-4 pt-4 border-t border-blue-200 anexos-solucao-section';
+    
+    const tituloAnexos = document.createElement('h5');
+    tituloAnexos.className = 'text-sm font-medium text-gray-700 mb-3';
+    tituloAnexos.textContent = 'Anexos da Solução:';
+    anexosSection.appendChild(tituloAnexos);
+    
+    const divImagens = document.createElement('div');
+    divImagens.className = 'grid grid-cols-2 sm:grid-cols-3 gap-3';
+    
+    anexosSolucao.forEach(anexo => {
+        const urlImagem = `http://localhost:5000${anexo.caminhoArquivo}`;
+        const anexoElement = document.createElement('div');
+        anexoElement.className = 'relative group';
+        anexoElement.innerHTML = `
+            <a href="${urlImagem}" target="_blank" title="${anexo.nomeArquivo}" class="block">
+                <img src="${urlImagem}" alt="${anexo.nomeArquivo}" 
+                     class="w-full h-24 object-cover rounded-lg border border-gray-200 hover:border-blue-300 transition-colors">
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all rounded-lg flex items-center justify-center">
+                    <i class="fas fa-search-plus text-white opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </div>
+            </a>
+            <p class="text-xs text-gray-500 mt-1 truncate" title="${anexo.nomeArquivo}">${anexo.nomeArquivo}</p>
+        `;
+        divImagens.appendChild(anexoElement);
+    });
+    
+    anexosSection.appendChild(divImagens);
+    solucaoContainer.appendChild(anexosSection);
 }
 
 function adicionarListenersDeAcao(chamadoId, token) {
@@ -252,20 +406,33 @@ function fecharModalReencaminhar() {
 
 async function carregarTecnicos(select, token) {
     try {
-        // Por enquanto, vamos usar uma lista estática de técnicos
-        // Em uma implementação real, você faria uma chamada para a API
-        const tecnicos = [
-            { id: 2, nome: 'Carlos Técnico' },
-            { id: 9, nome: 'João Gestor' }
-        ];
+        console.log('Carregando técnicos da API...');
+        
+        const response = await fetch('http://localhost:5000/api/usuarios?perfil=Técnico', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Erro ao buscar técnicos: ${response.status}`);
+        }
+        
+        const tecnicos = await response.json();
+        console.log('Técnicos recebidos:', tecnicos);
         
         select.innerHTML = '<option value="">Selecione um técnico...</option>';
-        tecnicos.forEach(tecnico => {
-            const option = document.createElement('option');
-            option.value = tecnico.id;
-            option.textContent = tecnico.nome;
-            select.appendChild(option);
-        });
+        
+        if (tecnicos && tecnicos.length > 0) {
+            tecnicos.forEach(tecnico => {
+                const option = document.createElement('option');
+                option.value = tecnico.id;
+                option.textContent = tecnico.nome;
+                select.appendChild(option);
+            });
+        } else {
+            select.innerHTML = '<option value="">Nenhum técnico disponível</option>';
+        }
     } catch (error) {
         console.error('Erro ao carregar técnicos:', error);
         select.innerHTML = '<option value="">Erro ao carregar técnicos</option>';

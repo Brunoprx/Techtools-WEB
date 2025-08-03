@@ -23,11 +23,28 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.AdicionarAnexo
                 throw new Exception("Nenhum arquivo foi enviado.");
             }
 
-            var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "solucoes");
+            // Determinar a pasta baseada no status do chamado
+            string subFolder;
+            if (request.IsAnexoSolucao)
+            {
+                subFolder = "solucoes";
+            }
+            else
+            {
+                subFolder = "anexos";
+            }
+
+            var uploadsFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", subFolder);
+            
+            // Garantir que a pasta existe
             if (!Directory.Exists(uploadsFolderPath))
             {
                 Directory.CreateDirectory(uploadsFolderPath);
+                Console.WriteLine($"Pasta criada: {uploadsFolderPath}");
             }
+            
+            Console.WriteLine($"Salvando anexo em: {uploadsFolderPath}");
+            Console.WriteLine($"IsAnexoSolucao: {request.IsAnexoSolucao}");
 
             var nomeArquivoUnico = Guid.NewGuid().ToString() + Path.GetExtension(request.FileName);
             var caminhoCompleto = Path.Combine(uploadsFolderPath, nomeArquivoUnico);
@@ -38,17 +55,22 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.AdicionarAnexo
                 await request.FileStream.CopyToAsync(stream, cancellationToken);
             }
 
+            var caminhoArquivo = $"/uploads/{subFolder}/{nomeArquivoUnico}";
+            
             var anexo = new Domain.Entities.Anexo
             {
                 ChamadoId = request.ChamadoId,
                 NomeArquivo = request.FileName,
-                CaminhoArquivo = $"/uploads/solucoes/{nomeArquivoUnico}",
+                CaminhoArquivo = caminhoArquivo,
                 EmpresaId = request.EmpresaId
             };
+
+            Console.WriteLine($"Anexo criado: {anexo.NomeArquivo} -> {anexo.CaminhoArquivo}");
 
             await _chamadoRepository.AdicionarAnexo(anexo);
             await _chamadoRepository.SalvarAlteracoes();
 
+            Console.WriteLine($"Anexo salvo no banco com sucesso");
             return anexo.CaminhoArquivo;
         }
     }

@@ -9,5 +9,6 @@ namespace SistemaIntegrado.Application.Features.Chamados.Commands.AdicionarAnexo
         public Stream FileStream { get; set; } = Stream.Null; // O conteúdo do arquivo
         public string FileName { get; set; } = string.Empty;   // O nome original do arquivo
         public int EmpresaId { get; set; }
+        public bool IsAnexoSolucao { get; set; } = false; // Indica se é anexo da solução ou da abertura
     }
 }
